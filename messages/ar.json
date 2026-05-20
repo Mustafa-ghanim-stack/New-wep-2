@@ -8,10 +8,7 @@
   "topbar": {
     "english": "English",
     "arabic": "العربية",
-    "login": "تسجيل الدخول",
-    "students": "للطلاب",
-    "employees": "للموظفين",
-    "applicants": "للمتقدمين"
+    "login": "تسجيل الدخول"
   },
   "nav": [
     {

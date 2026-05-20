@@ -464,12 +464,12 @@ export default function AdminPage() {
             <div>
               <h2 className="text-lg font-bold text-gray-800 mb-4">{t("topbar.section")}</h2>
               <SectionCard title={t("label.ar")} defaultOpen>
-                {["english", "arabic", "login", "students", "employees", "applicants"].map((f) => (
+                {["english", "arabic", "login"].map((f) => (
                   <Input key={f} label={t("topbar." + f)} value={ar.topbar?.[f] || ""} onChange={(v) => setAr({ ...ar, topbar: { ...ar.topbar, [f]: v } })} />
                 ))}
               </SectionCard>
               <SectionCard title={t("label.en")} defaultOpen>
-                {["english", "arabic", "login", "students", "employees", "applicants"].map((f) => (
+                {["english", "arabic", "login"].map((f) => (
                   <Input key={f} label={t("topbar." + f)} value={en.topbar?.[f] || ""} onChange={(v) => setEn({ ...en, topbar: { ...en.topbar, [f]: v } })} />
                 ))}
               </SectionCard>

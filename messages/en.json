@@ -8,10 +8,7 @@
   "topbar": {
     "english": "English",
     "arabic": "العربية",
-    "login": "Login",
-    "students": "Students",
-    "employees": "Employees",
-    "applicants": "Applicants"
+    "login": "Login"
   },
   "nav": [
     {

@@ -59,7 +59,7 @@ function TelegramIcon() {
 }
 
 // ----- Components -----
-function Header({ nav, topbar, searchLabel, locale }: { nav: { label: string; href: string; children?: { label: string; href: string }[] }[]; topbar: { english: string; arabic: string; login: string; students: string; employees: string; applicants: string }; searchLabel: string; locale: string }) {
+function Header({ nav, topbar, searchLabel, locale }: { nav: { label: string; href: string; children?: { label: string; href: string }[] }[]; topbar: { english: string; arabic: string; login: string }; searchLabel: string; locale: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -72,11 +72,8 @@ function Header({ nav, topbar, searchLabel, locale }: { nav: { label: string; hr
             <span className="text-white/50">|</span>
             <a href="/login" className="hover:underline">{topbar.login}</a>
           </div>
-          <div className="flex items-center gap-3">
-            <a href="#" className="hover:underline text-xs">{topbar.students}</a>
-            <a href="#" className="hover:underline text-xs">{topbar.employees}</a>
-            <a href="#" className="hover:underline text-xs">{topbar.applicants}</a>
-          </div>
+          <div className="flex items-center gap-3" />
+
         </div>
       </div>
 
@@ -501,9 +498,6 @@ export default function PageContent({ locale }: { locale: string }) {
     english: t("topbar.english"),
     arabic: t("topbar.arabic"),
     login: t("topbar.login"),
-    students: t("topbar.students"),
-    employees: t("topbar.employees"),
-    applicants: t("topbar.applicants"),
   };
 
   return (
