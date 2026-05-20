@@ -1,0 +1,255 @@
+{
+  "site": {
+    "title": "Al-Sharq College | كلية الشرق",
+    "desc": "Al-Sharq College - A leading educational institution in higher education",
+    "name": "Al-Sharq College",
+    "name_en": "Al-Sharq College"
+  },
+  "topbar": {
+    "english": "English",
+    "arabic": "العربية",
+    "login": "Login",
+    "students": "Students",
+    "employees": "Employees",
+    "applicants": "Applicants"
+  },
+  "nav": [
+    {
+      "label": "About",
+      "children": [
+        "Presidency",
+        "Colleges & Departments",
+        "Administrative Body",
+        "Committees",
+        "Administration",
+        "Legal Foundations",
+        "Organizational Structure",
+        "Quality & Development"
+      ]
+    },
+    {
+      "label": "Admission",
+      "children": [
+        "Admission Guide",
+        "Online Application",
+        "Tuition Fees",
+        "Scholarships",
+        "International Students",
+        "FAQ"
+      ]
+    },
+    {
+      "label": "Academics",
+      "children": [
+        "Bachelor",
+        "Master",
+        "PhD",
+        "Diplomas",
+        "Continuing Education",
+        "All Programs"
+      ]
+    },
+    {
+      "label": "Research",
+      "children": [
+        "Research Centers",
+        "Research Projects",
+        "Publications",
+        "Research Library"
+      ]
+    },
+    {
+      "label": "Campus Life",
+      "children": [
+        "Facilities",
+        "Student Activities",
+        "Clubs & Societies",
+        "Accommodation",
+        "Dining & Services",
+        "Sports"
+      ]
+    },
+    {
+      "label": "Library"
+    },
+    {
+      "label": "Contact Us"
+    }
+  ],
+  "search": "Search",
+  "hero": [
+    {
+      "title": "Tradition & Innovation",
+      "desc": "Al-Sharq College combines the authenticity of time-honored education with the latest learning methods to graduate future leaders."
+    },
+    {
+      "title": "More Than Just Study",
+      "desc": "An integrated university environment that combines academic excellence with a vibrant student life."
+    },
+    {
+      "title": "Pioneering Research",
+      "desc": "We focus on innovative scientific research to meet the challenges of the present and future."
+    },
+    {
+      "title": "Welcome",
+      "desc": "We welcome students and faculty from all over the world to our campus."
+    }
+  ],
+  "quicklinks": [
+    "Students",
+    "Researchers",
+    "Public",
+    "Companies",
+    "Press",
+    "Alumni"
+  ],
+  "features": [
+    {
+      "title": "Academic Programs",
+      "desc": "Over 140 diverse study programs in various scientific and humanitarian disciplines.",
+      "more": "Read more →"
+    },
+    {
+      "title": "Student Portal",
+      "desc": "Organize daily academic life through the electronic portal system.",
+      "more": "Read more →"
+    },
+    {
+      "title": "Open Day",
+      "desc": "Learn about the study programs and specializations available for 2026.",
+      "more": "Read more →"
+    }
+  ],
+  "sidecards": [
+    {
+      "title": "Research Database",
+      "desc": "Browse research projects and scientific publications",
+      "more": "Read more →"
+    },
+    {
+      "title": "Diversity - Family - Openness",
+      "desc": "We believe in diversity, equal opportunity, and openness to the world",
+      "more": "Read more →"
+    }
+  ],
+  "highlight": {
+    "title": "Medical Information Engineering",
+    "desc": "This program combines technology and medicine to qualify cadres capable of developing innovative solutions for the future of healthcare.",
+    "cta": "Discover the Program",
+    "campaign_title": "Educational Institutions Show Their Stance!",
+    "campaign_sub": "Freedom of education and research is the foundation of our democracy",
+    "campaign_desc": "We believe in open dialogue and free scientific exchange. Al-Sharq College supports democratic values and peaceful coexistence without discrimination.",
+    "campaign_cta": "More information →"
+  },
+  "news": {
+    "title": "Latest News",
+    "all": "All news ←",
+    "items": [
+      {
+        "date": "May 15, 2026",
+        "title": "Al-Sharq College succeeds in obtaining program accreditation"
+      },
+      {
+        "date": "May 12, 2026",
+        "title": "Workshop on Artificial Intelligence in Education"
+      },
+      {
+        "date": "May 11, 2026",
+        "title": "Democratic Responsibility in Higher Education Institutions"
+      },
+      {
+        "date": "May 7, 2026",
+        "title": "Ranking 2026: Al-Sharq College in advanced positions"
+      }
+    ]
+  },
+  "events": {
+    "title": "Upcoming Events",
+    "all": "All events ←",
+    "items": [
+      {
+        "date": "April 16",
+        "title": "Innovation in Education Conference - Third Edition"
+      },
+      {
+        "date": "May 18",
+        "title": "Seminar: Arabic Language in the Digital Age"
+      },
+      {
+        "date": "May 18",
+        "title": "Film & Talk: Values of Tolerance in Society"
+      },
+      {
+        "date": "May 19",
+        "title": "Student Projects Exhibition"
+      }
+    ]
+  },
+  "footer": {
+    "quicklinks": {
+      "title": "Quick Links",
+      "items": [
+        "Services Guide",
+        "Digital Library",
+        "Privacy Policy",
+        "Cookie Policy",
+        "Sitemap",
+        "Accessibility Statement"
+      ]
+    },
+    "certificates": {
+      "title": "Certificates",
+      "items": [
+        "Family-Friendly College",
+        "HRK Accreditation",
+        "Academic Quality",
+        "Program Accreditation"
+      ]
+    },
+    "contact": {
+      "title": "Contact Us",
+      "address": "Basra - Al-Zaytoun District - Hamdan Road",
+      "phone": "Tel: 07744445669 / 07870703000",
+      "hours": "Sun – Thu: 8:00 AM - 3:00 PM"
+    },
+    "social_title": "Follow us on Social Media",
+    "copyright": "© 2026 Al-Sharq College. All rights reserved."
+  },
+  "chat": {
+    "title": "AI Assistant",
+    "welcome": "Hello! I'm the AI assistant of Al-Sharq College. How can I help you?",
+    "placeholder": "Type your question here...",
+    "send": "Send",
+    "close": "Close",
+    "responses": [
+      "You can explore our various academic programs in the Academics section.",
+      "For admission requirements and deadlines, please visit the Admission page.",
+      "Our campus facilities include libraries, labs, sports centers, and student housing.",
+      "You can contact the registration office at 07744445669 during working hours.",
+      "We offer bachelor's, master's, PhD, and diploma programs across multiple disciplines.",
+      "Our research centers focus on medical engineering, AI, and sustainable development.",
+      "Student activities include clubs, sports teams, cultural events, and volunteer programs.",
+      "Official working hours: Sunday to Thursday from 8:00 AM to 3:00 PM.",
+      "The college is located in Basra - Al-Zaytoun District - Hamdan Road. You can visit us during office hours.",
+      "For inquiries, you can email us or call 07870703000.",
+      "We provide a fully integrated digital library with thousands of books and scientific articles.",
+      "You can apply online through the electronic admission portal on our website.",
+      "Scholarships are available for outstanding students and students with limited income.",
+      "Student life at Al-Sharq College is full of events and activities throughout the year.",
+      "We have partnerships with Arab and international universities for student and faculty exchange.",
+      "Registration for the next semester begins in August each year.",
+      "We offer academic advising services for new students to help them choose their majors.",
+      "College labs are equipped with the latest devices and scientific technologies.",
+      "Students can benefit from practical training programs in cooperation with the private sector.",
+      "We have a continuing education center offering training courses and professional certificates."
+    ],
+    "greetings": [
+      "Hello! How can I help you today?",
+      "Hi there! I'm here to assist you. What can I do for you?",
+      "Welcome! How may I help you?",
+      "Hello! Feel free to ask me anything about Al-Sharq College.",
+      "Hi! I'm the AI assistant. What would you like to know?",
+      "Greetings! I'm happy to help. What's your question?"
+    ]
+  }
+}
