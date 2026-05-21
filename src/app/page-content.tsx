@@ -403,7 +403,7 @@ function NewsEvents({ news, events, newsTitle, eventsTitle, newsAll, eventsAll }
 function Footer({ footerData, locale }: { footerData: { quicklinks: { title: string; items: string[] }; certificates: { title: string; items: string[] }; contact: { title: string; address: string; phone: string; hours: string }; social_title: string; copyright: string; social?: Record<string, string> }; locale: string }) {
   return (
     <footer className="bg-primary-dark text-white">
-      <div className="max-w-7xl mx-auto px-4 pt-2 pb-6">
+      <div className="max-w-7xl mx-auto px-4 pt-8 pb-6">
         <div className="grid md:grid-cols-3 gap-4">
           <div>
             <h4 className="font-bold text-base mb-2">{footerData.quicklinks.title}</h4>
