@@ -403,8 +403,8 @@ function NewsEvents({ news, events, newsTitle, eventsTitle, newsAll, eventsAll }
 function Footer({ footerData, locale }: { footerData: { quicklinks: { title: string; items: string[] }; certificates: { title: string; items: string[] }; contact: { title: string; address: string; phone: string; hours: string }; social_title: string; copyright: string; social?: Record<string, string> }; locale: string }) {
   return (
     <footer className="bg-primary-dark text-white">
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 pt-4 pb-8">
+        <div className="grid md:grid-cols-3 gap-6">
           <div>
             <h4 className="font-bold text-lg mb-4">{footerData.quicklinks.title}</h4>
             <ul className="space-y-2 text-sm">
@@ -437,7 +437,7 @@ function Footer({ footerData, locale }: { footerData: { quicklinks: { title: str
           </div>
         </div>
       </div>
-      <div className="border-t border-white/10 py-6">
+      <div className="border-t border-white/10 py-4">
         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-4">
           <p className="text-white/70 text-sm font-medium">{footerData.social_title}</p>
           <div className="flex items-center justify-center gap-6">
