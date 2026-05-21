@@ -403,11 +403,11 @@ function NewsEvents({ news, events, newsTitle, eventsTitle, newsAll, eventsAll }
 function Footer({ footerData, locale }: { footerData: { quicklinks: { title: string; items: string[] }; certificates: { title: string; items: string[] }; contact: { title: string; address: string; phone: string; hours: string }; social_title: string; copyright: string; social?: Record<string, string> }; locale: string }) {
   return (
     <footer className="bg-primary-dark text-white">
-      <div className="max-w-7xl mx-auto px-4 pt-4 pb-8">
-        <div className="grid md:grid-cols-3 gap-6">
+      <div className="max-w-7xl mx-auto px-4 pt-2 pb-6">
+        <div className="grid md:grid-cols-3 gap-4">
           <div>
-            <h4 className="font-bold text-lg mb-4">{footerData.quicklinks.title}</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="font-bold text-base mb-2">{footerData.quicklinks.title}</h4>
+            <ul className="space-y-1 text-sm">
               {footerData.quicklinks.items.map((link) => (
                 <li key={link}>
                   <a href="#" className="text-white/70 hover:text-white transition-colors">{link}</a>
@@ -417,8 +417,8 @@ function Footer({ footerData, locale }: { footerData: { quicklinks: { title: str
           </div>
 
           <div>
-            <h4 className="font-bold text-lg mb-4">{footerData.certificates.title}</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="font-bold text-base mb-2">{footerData.certificates.title}</h4>
+            <ul className="space-y-1 text-sm">
               {footerData.certificates.items.map((cert) => (
                 <li key={cert}>
                   <a href="#" className="text-white/70 hover:text-white transition-colors">{cert}</a>
@@ -428,7 +428,7 @@ function Footer({ footerData, locale }: { footerData: { quicklinks: { title: str
           </div>
 
           <div>
-            <h4 className="font-bold text-lg mb-4">{footerData.contact.title}</h4>
+            <h4 className="font-bold text-base mb-2">{footerData.contact.title}</h4>
             <address className="not-italic text-white/70 text-sm leading-relaxed">
               <p>{footerData.contact.address}</p>
               <p className="mt-2">{footerData.contact.phone}</p>
@@ -440,7 +440,7 @@ function Footer({ footerData, locale }: { footerData: { quicklinks: { title: str
       <div className="border-t border-white/10 py-4">
         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-4">
           <p className="text-white/70 text-sm font-medium">{footerData.social_title}</p>
-          <div className="flex items-center justify-center gap-6">
+          <div className="flex items-center justify-center gap-3">
             <SocialIcon href={footerData.social?.facebook || "#"} name="فيسبوك" bg="hover:bg-[#1877F2]"><FacebookIcon /></SocialIcon>
             <SocialIcon href={footerData.social?.instagram || "#"} name="إنستغرام" bg="hover:bg-[#E4405F]"><InstagramIcon /></SocialIcon>
             <SocialIcon href={footerData.social?.telegram || "#"} name="تيلغرام" bg="hover:bg-[#0088CC]"><TelegramIcon /></SocialIcon>
