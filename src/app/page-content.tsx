@@ -78,14 +78,14 @@ function Header({ nav, topbar, searchLabel, locale }: { nav: { label: string; hr
       </div>
 
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          <a href={`/${locale}`} className="flex items-center gap-3">
-            <img src="/images/logo.png" alt="كلية الشرق" className="h-12 w-auto" />
+        <div className="flex items-center justify-between h-24">
+          <a href={`/${locale}`} className="flex items-center gap-4">
+            <img src="/images/logo.png" alt="كلية الشرق" className="h-16 w-auto" />
             <div>
-              <div className="text-primary font-bold text-lg leading-tight">
+              <div className="text-primary font-bold text-xl leading-tight">
                 {locale === "ar" ? "كلية الشرق" : "Al-Sharq College"}
               </div>
-              <div className="text-xs text-text-light">
+              <div className="text-sm text-text-light">
                 {locale === "ar" ? "Al-Sharq College" : "كلية الشرق"}
               </div>
             </div>
