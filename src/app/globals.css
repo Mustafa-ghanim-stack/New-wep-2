@@ -6,7 +6,17 @@
 }
 .animate-slide-up { animation: slide-up 0.3s ease-out; }
 
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 15s linear infinite;
+  width: max-content;
+}
+
 @theme {
+  --font-sans: var(--font-cairo), 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --color-primary: #00ACC1;
   --color-primary-light: #26C6DA;
   --color-primary-dark: #00838F;
@@ -22,7 +32,13 @@
     box-sizing: border-box;
   }
   body {
-    direction: rtl;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-sans);
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }

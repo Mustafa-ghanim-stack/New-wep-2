@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 import AiChat from "./AiChat";
 
 // ----- Types -----
@@ -22,6 +23,8 @@ function SocialIcon({ href, name, bg, children }: { href: string; name: string; 
   return (
     <a
       href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white/70 ${bg} hover:text-white transition-all`}
       title={name}
     >
@@ -59,39 +62,58 @@ function TelegramIcon() {
 }
 
 // ----- Components -----
-function Header({ nav, topbar, searchLabel, locale }: { nav: { label: string; href: string; children?: { label: string; href: string }[] }[]; topbar: { english: string; arabic: string; login: string }; searchLabel: string; locale: string }) {
+interface NavChild {
+  label: string;
+  href?: string;
+  children?: NavChild[];
+}
+
+export function Header({ nav, topbar, searchLabel, locale }: { nav: { label: string; href: string; children?: NavChild[] }[]; topbar: { english: string; arabic: string; login: string }; searchLabel: string; locale: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [openSubDropdown, setOpenSubDropdown] = useState<string | null>(null);
+  const [showContact, setShowContact] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => { setIsAdmin(!!localStorage.getItem("admin_token")); }, []);
+  const switchLocale = locale === "ar" ? "en" : "ar";
+  const pathWithoutLocale = pathname.replace(/^\/(ar|en)\/?/, "/");
+  const switchHref = `/${switchLocale}${pathWithoutLocale}`;
 
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-white shadow-md relative">
+      <a href={`/${locale}`} className="absolute" style={{ insetInlineStart: '295px', top: '64px' }}>
+        <img src="/images/logo.png" alt="كلية الشرق" className="h-32 w-auto" />
+      </a>
       <div className="bg-primary text-white text-sm">
         <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <a href={`/${locale === "ar" ? "en" : "ar"}`} className="hover:underline">{locale === "ar" ? topbar.english : topbar.arabic}</a>
+            <a href={switchHref} className="hover:underline">{locale === "ar" ? topbar.english : topbar.arabic}</a>
             <span className="text-white/50">|</span>
-            <a href="/login" className="hover:underline">{topbar.login}</a>
+            {isAdmin ? (
+              <a href="/admin" className="hover:underline">{locale === "ar" ? "لوحة التحكم" : "Admin Panel"}</a>
+            ) : (
+              <a href="/login" className="hover:underline">{topbar.login}</a>
+            )}
           </div>
-          <div className="flex items-center gap-3" />
+          <div className="flex items-center gap-3">
+            <button onClick={() => setShowContact(true)} className="hover:underline cursor-pointer">{locale === "ar" ? "اتصل بنا" : "Contact Us"}</button>
+            <span className="text-white/50">|</span>
+            <button className="hover:underline" aria-label={searchLabel}>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
+          </div>
 
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-24">
-          <a href={`/${locale}`} className="flex items-center gap-4">
-            <img src="/images/logo.png" alt="كلية الشرق" className="h-16 w-auto" />
-            <div>
-              <div className="text-primary font-bold text-xl leading-tight">
-                {locale === "ar" ? "كلية الشرق" : "Al-Sharq College"}
-              </div>
-              <div className="text-sm text-text-light">
-                {locale === "ar" ? "Al-Sharq College" : "كلية الشرق"}
-              </div>
-            </div>
-          </a>
+        <div className="flex items-end justify-center h-44">
 
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1 mb-6">
             {nav.map((item) => (
               <div
                 key={item.label}
@@ -101,35 +123,63 @@ function Header({ nav, topbar, searchLabel, locale }: { nav: { label: string; hr
               >
                 <a
                   href={item.href}
-                  className="px-3 py-2 text-sm text-text-dark hover:text-primary font-medium rounded-md hover:bg-gray-50 transition-colors"
+                  className="px-4 py-2 text-base text-text-dark hover:text-primary font-medium rounded-md hover:bg-gray-50 transition-colors"
                 >
                   {item.label}
                   {item.children && (
-                    <svg className="inline-block w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="inline-block w-3 h-3 me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   )}
                 </a>
                 {item.children && openDropdown === item.label && (
-                  <div className="absolute top-full right-0 bg-white shadow-xl border rounded-lg py-2 min-w-56 z-50">
+                  <div className="absolute top-full start-0 bg-white shadow-xl border rounded-lg py-2 min-w-56 z-50">
                     {item.children.map((child) => (
-                      <a
+                      <div
                         key={child.label}
-                        href={child.href}
-                        className="block px-4 py-2 text-sm text-text-dark hover:bg-primary hover:text-white transition-colors"
+                        className="relative group/sub"
+                        onMouseEnter={() => setOpenSubDropdown(child.label)}
+                        onMouseLeave={() => setOpenSubDropdown(null)}
                       >
-                        {child.label}
-                      </a>
+                        {child.children ? (
+                          <>
+                            <span className="block px-4 py-2 text-base text-text-dark hover:bg-primary hover:text-white transition-colors cursor-default flex items-center gap-3">
+                              <span className="w-2 h-2 bg-primary flex-shrink-0"></span>
+                              <span className="flex-1">{child.label}</span>
+                              <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 5l-7 7 7 7" />
+                              </svg>
+                            </span>
+                            {openSubDropdown === child.label && (
+                              <div className="absolute top-0 start-full bg-white shadow-xl border rounded-lg py-2 min-w-56 z-50">
+                                {child.children.map((sub) => (
+                                  <a
+                                    key={sub.label}
+                                    href={sub.href || "#"}
+                                    className="flex items-center gap-3 px-4 py-2 text-base text-text-dark hover:bg-primary hover:text-white transition-colors"
+                                  >
+                                    <span className="w-2 h-2 bg-primary flex-shrink-0"></span>
+                                    {sub.label}
+                                  </a>
+                                ))}
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          <a
+                            href={child.href || "#"}
+                            className="flex items-center gap-3 px-4 py-2 text-base text-text-dark hover:bg-primary hover:text-white transition-colors"
+                          >
+                            <span className="w-2 h-2 bg-primary flex-shrink-0"></span>
+                            {child.label}
+                          </a>
+                        )}
+                      </div>
                     ))}
                   </div>
                 )}
               </div>
             ))}
-            <button className="mr-2 p-2 text-text-dark hover:text-primary" aria-label={searchLabel}>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </button>
           </nav>
 
           <button
@@ -162,18 +212,66 @@ function Header({ nav, topbar, searchLabel, locale }: { nav: { label: string; hr
               {item.children && (
                 <div className="bg-gray-50">
                   {item.children.map((child) => (
-                    <a
-                      key={child.label}
-                      href={child.href}
-                      className="block px-8 py-2 text-sm text-text-light hover:text-primary border-b"
-                    >
-                      {child.label}
-                    </a>
+                    <div key={child.label}>
+                      {child.children ? (
+                        <>
+                          <span className="block px-8 py-2 text-sm font-medium text-text-dark border-b cursor-default">
+                            {child.label}
+                          </span>
+                          <div className="bg-gray-100/50">
+                            {child.children.map((sub) => (
+                              <a
+                                key={sub.label}
+                                href={sub.href || "#"}
+                                className="block px-12 py-1.5 text-sm text-text-light hover:text-primary border-b"
+                              >
+                                {sub.label}
+                              </a>
+                            ))}
+                          </div>
+                        </>
+                      ) : (
+                        <a
+                          href={child.href || "#"}
+                          className="block px-8 py-2 text-sm text-text-light hover:text-primary border-b"
+                        >
+                          {child.label}
+                        </a>
+                      )}
+                    </div>
                   ))}
                 </div>
               )}
             </div>
           ))}
+        </div>
+      )}
+
+      {showContact && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={() => setShowContact(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-bold text-text-dark">{locale === "ar" ? "معلومات الاتصال" : "Contact Info"}</h3>
+              <button onClick={() => setShowContact(false)} className="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+            </div>
+            <div className="space-y-4 text-text-dark">
+              <div>
+                <p className="font-semibold text-primary">{locale === "ar" ? "العنوان" : "Address"}</p>
+                <p className="text-sm">{locale === "ar" ? "البصرة - حي الزيتون - طريق حمدان الجديد" : "Basra - Al-Zaytun District - Hamdan Al-Jadid Road"}</p>
+              </div>
+              <div>
+                <p className="font-semibold text-primary">{locale === "ar" ? "الهاتف" : "Phone"}</p>
+                <p className="text-sm">07744445669 / 07870703000</p>
+              </div>
+              <div>
+                <p className="font-semibold text-primary">{locale === "ar" ? "مواعيد العمل" : "Working Hours"}</p>
+                <p className="text-sm">{locale === "ar" ? "الأحد – الخميس: 8:00 ص - 3:00 م" : "Sunday – Thursday: 8:00 AM - 3:00 PM"}</p>
+              </div>
+            </div>
+            <button onClick={() => setShowContact(false)} className="mt-6 w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-dark transition-colors">
+              {locale === "ar" ? "إغلاق" : "Close"}
+            </button>
+          </div>
         </div>
       )}
     </header>
@@ -192,7 +290,7 @@ function HeroSlider({ slides }: { slides: SliderItem[] }) {
   }, [next]);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 relative h-[500px] md:h-[600px] overflow-hidden bg-gray-900 rounded-2xl mt-6">
+    <section className="max-w-[1840px] mx-auto px-4 relative h-[400px] md:h-[700px] overflow-hidden bg-gray-900 rounded-2xl mt-6">
       {slides.map((slide, i) => (
         <div
           key={i}
@@ -207,8 +305,8 @@ function HeroSlider({ slides }: { slides: SliderItem[] }) {
           />
           <div className="absolute inset-0 z-20 flex items-center">
             <div className="px-4 text-white">
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">{slide.title}</h1>
-              <p className="text-lg md:text-xl max-w-2xl text-white/90">{slide.desc}</p>
+              <h1 className="text-2xl md:text-4xl font-bold mb-2">{slide.title}</h1>
+              <p className="text-sm md:text-base max-w-2xl text-white/90">{slide.desc}</p>
             </div>
           </div>
         </div>
@@ -228,14 +326,14 @@ function HeroSlider({ slides }: { slides: SliderItem[] }) {
 
       <button
         onClick={prev}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 text-white/70 hover:text-white text-3xl"
+        className="absolute start-4 top-1/2 -translate-y-1/2 z-30 text-white/70 hover:text-white text-3xl"
         aria-label="السابق"
       >
         ‹
       </button>
       <button
         onClick={next}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 text-white/70 hover:text-white text-3xl"
+        className="absolute end-4 top-1/2 -translate-y-1/2 z-30 text-white/70 hover:text-white text-3xl"
         aria-label="التالي"
       >
         ›
@@ -247,7 +345,7 @@ function HeroSlider({ slides }: { slides: SliderItem[] }) {
 function QuickLinks({ items }: { items: { label: string; href: string }[] }) {
   return (
     <section className="bg-white py-8">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-3xl mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {items.map((link) => (
             <a
@@ -272,7 +370,8 @@ function QuickLinks({ items }: { items: { label: string; href: string }[] }) {
 function FeatureCards({ items }: { items: { title: string; desc: string; more: string; href: string }[] }) {
   return (
     <section className="bg-gray-light py-16">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-[1840px] mx-auto px-4">
+
         <div className="grid md:grid-cols-3 gap-6">
           {items.map((feat, i) => (
             <a
@@ -304,7 +403,7 @@ function FeatureCards({ items }: { items: { title: string; desc: string; more: s
 function SideCards({ items }: { items: { title: string; desc: string; more: string; href: string }[] }) {
   return (
     <section className="bg-gray-light pb-16">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-[1840px] mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-6">
           {items.map((card, i) => (
             <a
@@ -331,7 +430,7 @@ function SideCards({ items }: { items: { title: string; desc: string; more: stri
 function HighlightSection({ data }: { data: { title: string; desc: string; cta: string; campaign_title: string; campaign_sub: string; campaign_desc: string; campaign_cta: string } }) {
   return (
     <section className="bg-white py-16">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-[1840px] mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-gradient-to-br from-primary to-primary-dark rounded-2xl p-8 text-white">
             <h3 className="text-2xl font-bold mb-4">{data.title}</h3>
@@ -365,7 +464,7 @@ function HighlightSection({ data }: { data: { title: string; desc: string; cta: 
 function NewsEvents({ news, events, newsTitle, eventsTitle, newsAll, eventsAll }: { news: NewsItem[]; events: NewsItem[]; newsTitle: string; eventsTitle: string; newsAll: string; eventsAll: string }) {
   return (
     <section className="bg-gray-light py-16">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-[1840px] mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12">
           <div>
             <h2 className="text-2xl font-bold text-text-dark mb-6">{newsTitle}</h2>
@@ -398,7 +497,183 @@ function NewsEvents({ news, events, newsTitle, eventsTitle, newsAll, eventsAll }
   );
 }
 
-function Footer({ footerData, locale }: { footerData: { quicklinks: { title: string; items: string[] }; certificates: { title: string; items: string[] }; contact: { title: string; address: string; phone: string; hours: string }; social_title: string; copyright: string; social?: Record<string, string> }; locale: string }) {
+function Card({ dept, locale }: { dept: { name: string; branch: string; morning: string; evening: string; morningRate: string; eveningRate: string; img?: string }; locale: string }) {
+  return (
+    <div className="flex-shrink-0 w-[320px]">
+      <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-neutral-100 h-full flex flex-col">
+        {dept.img ? (
+          <div className="w-full h-32 relative overflow-hidden">
+            <img src={dept.img} alt={dept.name} className="w-full h-full object-cover" />
+          </div>
+        ) : (
+          <div className="w-full h-32 bg-gradient-to-br from-primary to-primary-dark relative">
+            <div className="absolute inset-0 flex items-center justify-center text-white/30">
+              <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+          </div>
+        )}
+        <div className="p-5 flex-1 flex flex-col">
+          <h3 className="font-bold text-neutral-900 mb-2 leading-tight text-base">{dept.name}</h3>
+          <div className="mb-3">
+            <span className="inline-block px-2.5 py-1 bg-primary text-white text-xs font-semibold rounded-full">{dept.branch}</span>
+          </div>
+          <div className="space-y-1.5 mb-3">
+            <div className="flex items-center justify-between p-2.5 bg-blue-50 rounded-lg">
+              <span className="text-xs font-medium text-neutral-700">{locale === "ar" ? "صباحي" : "Morning"}</span>
+              <span className="text-sm font-bold text-primary">{dept.morning} د.ع</span>
+            </div>
+            <div className="flex items-center justify-between p-2.5 bg-green-50 rounded-lg">
+              <span className="text-xs font-medium text-neutral-700">{locale === "ar" ? "مسائي" : "Evening"}</span>
+              <span className="text-sm font-bold text-primary">{dept.evening} د.ع</span>
+            </div>
+          </div>
+          <div className="mt-auto pt-3 border-t border-neutral-200">
+            <p className="text-xs text-neutral-600 mb-1.5">{locale === "ar" ? "الحد الأدنى لمعدل القبول:" : "Minimum acceptance rate:"}</p>
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-neutral-600">{locale === "ar" ? "صباحي" : "Morning"}:</span>
+              <span className="font-bold text-neutral-900">{dept.morningRate}</span>
+            </div>
+            <div className="flex items-center justify-between text-xs mt-0.5">
+              <span className="text-neutral-600">{locale === "ar" ? "مسائي" : "Everyning"}:</span>
+              <span className="font-bold text-neutral-900">{dept.eveningRate}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FlagCounter({ locale }: { locale: string }) {
+  const [stats, setStats] = useState({ visitorsNow: 0, todayViews: 0, totalViews: 0 });
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    setIsAdmin(!!localStorage.getItem("admin_token"));
+  }, []);
+
+  const fmt = (n: number) => n.toLocaleString("en-US");
+
+  useEffect(() => {
+    fetch("/api/counter", { method: "POST" })
+      .then((r) => r.json())
+      .then(setStats)
+      .catch(() => {});
+    const id = setInterval(() => {
+      fetch("/api/counter")
+        .then((r) => r.json())
+        .then(setStats)
+        .catch(() => {});
+    }, 30000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className="flex items-center justify-center gap-6 py-3 text-sm text-white/70">
+      {isAdmin && (
+        <span>{locale === "ar" ? `الزوار الآن: ${fmt(stats.visitorsNow)}` : `Visitors Now: ${stats.visitorsNow}`}</span>
+      )}
+      {isAdmin && <span className="text-white/20">·</span>}
+      <span>{locale === "ar" ? `مشاهدات اليوم: ${fmt(stats.todayViews)}` : `Views Today: ${stats.todayViews}`}</span>
+      <span className="text-white/20">·</span>
+      <span>{locale === "ar" ? `إجمالي المشاهدات: ${fmt(stats.totalViews)}` : `Total Views: ${stats.totalViews}`}</span>
+    </div>
+  );
+}
+
+function TuitionFees({ data, locale }: { data: { title: string; viewAll: string; departments: { name: string; branch: string; morning: string; evening: string; morningRate: string; eveningRate: string; img?: string }[] }; locale: string }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
+
+  const onMouseDown = useCallback((e: React.MouseEvent) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const d = dragRef.current;
+    d.isDown = true;
+    d.startX = e.pageX;
+    d.scrollLeft = el.scrollLeft;
+    el.classList.add('dragging');
+  }, []);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    let pos = 0;
+    let running = true;
+
+    const step = () => {
+      if (!running) return;
+      pos += 0.5;
+      el.scrollLeft = pos;
+      if (pos >= el.scrollWidth / 2) pos = 1;
+      raf = requestAnimationFrame(step);
+    };
+    let raf = requestAnimationFrame(step);
+
+    const onMove = (e: MouseEvent) => {
+      const d = dragRef.current;
+      if (!d.isDown) return;
+      const el = trackRef.current;
+      if (!el) return;
+      el.scrollLeft = d.scrollLeft - (e.pageX - d.startX);
+    };
+
+    const onUp = () => {
+      const d = dragRef.current;
+      if (!d.isDown) return;
+      d.isDown = false;
+      const el = trackRef.current;
+      if (el) {
+        pos = el.scrollLeft;
+        el.classList.remove('dragging');
+      }
+    };
+
+    const onEnter = () => { running = false; cancelAnimationFrame(raf); };
+    const onLeave = () => { running = true; raf = requestAnimationFrame(step); };
+
+    el.addEventListener('mouseenter', onEnter);
+    el.addEventListener('mouseleave', onLeave);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+
+    return () => {
+      running = false;
+      cancelAnimationFrame(raf);
+      el.removeEventListener('mouseenter', onEnter);
+      el.removeEventListener('mouseleave', onLeave);
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    };
+  }, []);
+
+  return (
+    <section className="w-full py-16 bg-primary-dark overflow-hidden">
+      <style>{`.tf-track{width:fit-content;display:flex;}.tf-track.dragging{cursor:grabbing!important}`}</style>
+      <div className="px-4 mb-10 text-center">
+        <h2 className="text-4xl font-bold text-white mb-4">{data.title}</h2>
+        <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary-light mx-auto rounded-full mb-8" />
+        <a href="#" className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold text-base rounded-full transition-all border border-white/40 hover:border-white/60">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+          </svg>
+          <span>{data.viewAll}</span>
+        </a>
+      </div>
+      <div ref={trackRef} className="w-full overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none" style={{ direction: "ltr" }}>
+        <div className="tf-track gap-4 md:gap-6 lg:gap-8" onMouseDown={onMouseDown}>
+          {[...data.departments, ...data.departments].map((dept, i) => (
+            <Card key={i} dept={dept} locale={locale} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function Footer({ footerData, locale }: { footerData: { quicklinks: { title: string; items: string[] }; certificates: { title: string; items: string[] }; contact: { title: string; address: string; phone: string; hours: string }; social_title: string; copyright: string; social?: Record<string, string> }; locale: string }) {
   return (
     <footer className="bg-primary-dark text-white">
       <div className="max-w-7xl mx-auto px-4 pt-8 pb-6">
@@ -441,16 +716,21 @@ function Footer({ footerData, locale }: { footerData: { quicklinks: { title: str
           <div className="flex items-center justify-center gap-3">
             <SocialIcon href={footerData.social?.facebook || "#"} name="فيسبوك" bg="hover:bg-[#1877F2]"><FacebookIcon /></SocialIcon>
             <SocialIcon href={footerData.social?.instagram || "#"} name="إنستغرام" bg="hover:bg-[#E4405F]"><InstagramIcon /></SocialIcon>
-            <SocialIcon href={footerData.social?.telegram || "#"} name="تيلغرام" bg="hover:bg-[#0088CC]"><TelegramIcon /></SocialIcon>
+            {footerData.social?.telegram && (
+              <SocialIcon href={footerData.social.telegram} name="تيلغرام" bg="hover:bg-[#0088CC]"><TelegramIcon /></SocialIcon>
+            )}
             <SocialIcon href={footerData.social?.tiktok || "#"} name="تيك توك" bg="hover:bg-[#000000]"><TiktokIcon /></SocialIcon>
             <SocialIcon href={footerData.social?.youtube || "#"} name="يوتيوب" bg="hover:bg-[#FF0000]"><YoutubeIcon /></SocialIcon>
-            <SocialIcon href={footerData.social?.twitter || "#"} name="تويتر" bg="hover:bg-[#1DA1F2]"><TwitterIcon /></SocialIcon>
+            {footerData.social?.twitter && (
+              <SocialIcon href={footerData.social.twitter} name="تويتر" bg="hover:bg-[#1DA1F2]"><TwitterIcon /></SocialIcon>
+            )}
             {footerData.social?.linkedin && (
               <SocialIcon href={footerData.social.linkedin} name="لينكد إن" bg="hover:bg-[#0A66C2]"><LinkedinIcon /></SocialIcon>
             )}
           </div>
         </div>
       </div>
+      <FlagCounter locale={locale} />
       <div className="border-t border-white/10 py-4 text-center text-sm text-white/50">
         {footerData.copyright}
       </div>
@@ -462,22 +742,28 @@ function Footer({ footerData, locale }: { footerData: { quicklinks: { title: str
 export default function PageContent({ locale }: { locale: string }) {
   const t = useTranslations();
 
-  const nav = t.raw("nav").map((item: any) => ({
+  const mapChildren = (children: any[], locale: string): NavChild[] =>
+    children?.map((child: any) => {
+      if (typeof child === "string") return { label: child, href: "#" };
+      const mapped: NavChild = { label: child.label || "", href: child.href ? `/${locale}${child.href}` : "#" };
+      if (child.children) mapped.children = mapChildren(child.children, locale);
+      return mapped;
+    }) || [];
+
+  const nav = t.raw("nav").filter((item: any) => item.label !== "اتصل بنا" && item.label !== "Contact Us").map((item: any) => ({
     label: item.label,
-    href: item.href || "#",
-    children: item.children?.map((child: any) =>
-      typeof child === "string" ? { label: child, href: "#" } : { label: child.label || "", href: child.href || "#" }
-    ),
+    href: item.href ? `/${locale}${item.href}` : "#",
+    children: mapChildren(item.children, locale),
   }));
 
   const heroSlides: SliderItem[] = t.raw("hero").map((slide: any, i: number) => ({
     title: slide.title,
     desc: slide.desc,
     img: slide.img || [
-      "https://www.uni-rostock.de/storages/uni-rostock/UniHome/Startseite/Slider/1200x340_Hauptgebaeude.jpg",
-      "https://www.uni-rostock.de/storages/uni-rostock/UniHome/Presse/Imagebilder/huettelmoor.jpg",
-      "https://www.uni-rostock.de/storages/uni-rostock/UniHome/Startseite/Slider/LLM_Image_06-07-16_0052_b1.jpg",
-      "https://www.uni-rostock.de/storages/uni-rostock/UniHome/Presse/Imagebilder/international_willkommen.jpg",
+      "/images/slide1.jpg",
+      "/images/slide2.jpg",
+      "/images/slide3.jpg",
+      "/images/slide4.webp",
     ][i] || "",
   }));
 
@@ -490,6 +776,7 @@ export default function PageContent({ locale }: { locale: string }) {
   const news: NewsItem[] = t.raw("news.items").map((item: any) => ({ date: item.date, title: item.title, href: item.href || "#" }));
   const events: NewsItem[] = t.raw("events.items").map((item: any) => ({ date: item.date, title: item.title, href: item.href || "#" }));
   const footerData = t.raw("footer");
+  const tuitionFeesData = t.raw("tuitionFees");
   const chatData = t.raw("chat");
 
   const topbar = {
@@ -502,10 +789,11 @@ export default function PageContent({ locale }: { locale: string }) {
     <>
       <Header nav={nav} topbar={topbar} searchLabel={t("search")} locale={locale} />
       <HeroSlider slides={heroSlides} />
-      <QuickLinks items={quickLinks} />
+      {quickLinks.length > 0 && <QuickLinks items={quickLinks} />}
       <FeatureCards items={features} />
       <SideCards items={sideCards} />
       <HighlightSection data={highlight} />
+      <TuitionFees data={tuitionFeesData} locale={locale} />
       <NewsEvents
         news={news}
         events={events}

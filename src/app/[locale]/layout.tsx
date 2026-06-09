@@ -22,10 +22,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
   const messages = await getMessages({ locale });
+  const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <HtmlLangDir locale={locale}>{children}</HtmlLangDir>
+      <div dir={dir} lang={locale}>
+        <HtmlLangDir locale={locale}>{children}</HtmlLangDir>
+      </div>
     </NextIntlClientProvider>
   );
 }

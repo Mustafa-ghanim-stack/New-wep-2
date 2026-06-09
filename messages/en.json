@@ -14,14 +14,45 @@
     {
       "label": "About",
       "children": [
-        "Presidency",
-        "Colleges & Departments",
-        "Administrative Body",
-        "Committees",
-        "Administration",
-        "Legal Foundations",
-        "Organizational Structure",
-        "Quality & Development"
+        {
+          "label": "About the College",
+          "children": [
+            { "label": "About the College", "href": "/ab" },
+            { "label": "College Council", "href": "/college-council" },
+            { "label": "Faculty", "href": "/faculty" },
+            { "label": "College Statistics", "href": "/statistics" },
+            { "label": "College Rankings", "href": "/rankings" }
+          ]
+        },
+        {
+          "label": "Departments & Divisions",
+          "children": [
+            { "label": "Student Activities", "href": "/student-activities" },
+            { "label": "Academic Affairs", "href": "/academic-affairs" },
+            { "label": "IT Division", "href": "/it-division" },
+            { "label": "Psychological Guidance", "href": "/psychological-guidance" },
+            { "label": "Quality Assurance", "href": "/quality-assurance" },
+            { "label": "Continuing Education", "href": "/continuing-education" },
+            { "label": "Studies & Planning", "href": "/studies-planning" },
+            { "label": "Electronic Automation", "href": "/electronic-automation" }
+          ]
+        },
+        {
+          "label": "Academic Departments",
+          "children": [
+            { "label": "Dental Technology", "href": "/dental-technology" },
+            { "label": "Anesthesia Technology", "href": "/anesthesia-technology" },
+            { "label": "Radiology Technology", "href": "/radiology-technology" },
+            { "label": "Optics Technology", "href": "/optics-technology" },
+            { "label": "Emergency Medicine", "href": "/emergency-medicine" },
+            { "label": "Community Health", "href": "/community-health" },
+            { "label": "Physical Therapy", "href": "/physical-therapy" },
+            { "label": "Medical Physics & Radiotherapy", "href": "/medical-physics-radiotherapy" },
+            { "label": "Oil & Gas Engineering", "href": "/oil-gas-engineering" },
+            { "label": "Cybersecurity & Cloud Computing", "href": "/cybersecurity-cloud-computing" },
+            { "label": "Construction Engineering", "href": "/construction-engineering" }
+          ]
+        }
       ]
     },
     {
@@ -33,17 +64,6 @@
         "Scholarships",
         "International Students",
         "FAQ"
-      ]
-    },
-    {
-      "label": "Academics",
-      "children": [
-        "Bachelor",
-        "Master",
-        "PhD",
-        "Diplomas",
-        "Continuing Education",
-        "All Programs"
       ]
     },
     {
@@ -92,14 +112,7 @@
       "desc": "We welcome students and faculty from all over the world to our campus."
     }
   ],
-  "quicklinks": [
-    "Students",
-    "Researchers",
-    "Public",
-    "Companies",
-    "Press",
-    "Alumni"
-  ],
+  "quicklinks": [],
   "features": [
     {
       "title": "Academic Programs",
@@ -160,6 +173,22 @@
       }
     ]
   },
+  "tuitionFees": {
+    "title": "Tuition Fees",
+    "viewAll": "View detailed tuition fees for all departments",
+    "departments": [
+      { "name": "Cybersecurity & Cloud Computing", "branch": "Scientific", "morning": "3,000,000", "evening": "2,250,000", "morningRate": "59.50%", "eveningRate": "61.50%", "img": "/images/departments/cs.jpg" },
+      { "name": "Optics Techniques", "branch": "Biology", "morning": "2,750,000", "evening": "0", "morningRate": "69.50%", "eveningRate": "64.50%", "img": "/images/departments/cs2.jpg" },
+      { "name": "Health Physics & Radiotherapy", "branch": "Scientific", "morning": "2,500,000", "evening": "0", "morningRate": "59.50%", "eveningRate": "0.00%", "img": "/images/departments/sc1.jpg" },
+      { "name": "Anesthesia Techniques", "branch": "Biology", "morning": "3,000,000", "evening": "3,000,000", "morningRate": "70.00%", "eveningRate": "65.00%", "img": "/images/departments/cs3.jpg" },
+      { "name": "Emergency & First Aid", "branch": "Scientific", "morning": "1,500,000", "evening": "0", "morningRate": "59.50%", "eveningRate": "0.00%", "img": "/images/departments/cs4.png" },
+      { "name": "Physiotherapy & Rehabilitation", "branch": "Scientific", "morning": "2,750,000", "evening": "0", "morningRate": "59.50%", "eveningRate": "0.00%", "img": "/images/departments/cs5.jpg" },
+      { "name": "Oil & Gas Engineering", "branch": "Scientific", "morning": "3,000,000", "evening": "0", "morningRate": "59.50%", "eveningRate": "0.00%", "img": "/images/departments/cs6.jpg" },
+      { "name": "Dental Prosthetics", "branch": "Biology", "morning": "2,500,000", "evening": "2,250,000", "morningRate": "59.50%", "eveningRate": "64.50%", "img": "/images/departments/cs7.jpg" },
+      { "name": "Construction Engineering", "branch": "Scientific", "morning": "1,500,000", "evening": "0", "morningRate": "59.50%", "eveningRate": "0.00%", "img": "/images/departments/cs10.jpg" },
+      { "name": "Radiology Techniques", "branch": "Scientific", "morning": "3,000,000", "evening": "2,750,000", "morningRate": "69.50%", "eveningRate": "64.50%" }
+    ]
+  },
   "events": {
     "title": "Upcoming Events",
     "all": "All events ←",
@@ -210,6 +239,13 @@
       "hours": "Sun – Thu: 8:00 AM - 3:00 PM"
     },
     "social_title": "Follow us on Social Media",
+    "social": {
+      "instagram": "https://www.instagram.com/alsharq.uni/",
+      "youtube": "https://www.youtube.com/@AlsharqUni",
+      "facebook": "https://www.facebook.com/p/%D9%83%D9%84%D9%8A%D8%A9-%D8%A7%D9%84%D8%B4%D8%B1%D9%82-%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9-%D8%A7%D9%84%D8%A3%D9%87%D9%84%D9%8A%D8%A9-61581110071297/",
+      "tiktok": "https://www.tiktok.com/@sharquni",
+      "telegram": "https://t.me/alsharquni2024"
+    },
     "copyright": "© 2026 Al-Sharq College. All rights reserved."
   },
   "chat": {
@@ -248,5 +284,30 @@
       "Hi! I'm the AI assistant. What would you like to know?",
       "Greetings! I'm happy to help. What's your question?"
     ]
+  },
+  "about": {
+    "title": "About the College",
+    "subtitle": "About Al-Sharq College for Specialized Technical Sciences",
+    "content": "Al-Sharq College for Specialized Technical Sciences was established to provide advanced technical education that meets the needs of the local and global market. The college seeks to equip students with the latest knowledge and technical skills enabling them to adapt to the rapid changes in the world of technology, through advanced academic programs aimed at achieving excellence in education and scientific research.",
+    "vision": {
+      "title": "Vision",
+      "content": "Excellence in technical education and leadership in building sustainable applied knowledge"
+    },
+    "mission": {
+      "title": "Mission",
+      "content": "Al-Sharq College for Specialized Technical Sciences seeks to provide distinguished technical education that combines theoretical knowledge and practical application, by investing in qualified human cadres and providing a stimulating educational environment that keeps pace with technological developments, to prepare graduates with the scientific and practical skills necessary for the labor market, and to support applied scientific research and innovation, and enhance partnership with society and the public and private sectors to contribute to sustainable development."
+    },
+    "goals": {
+      "title": "Strategic Goals",
+      "items": [
+        "Human Resources Development: Attracting distinguished academic and administrative cadres, continuous development of staff skills, and promoting a culture of creativity and innovation.",
+        "Educational Process Development: Updating curricula to meet labor market needs, adopting modern interactive teaching methods, and introducing digital technologies in education.",
+        "Scientific Research Enhancement: Supporting applied research linked to societal needs, encouraging publication in reputable scientific journals, and building local and international research partnerships.",
+        "Quality and Accreditation: Applying comprehensive quality standards in education, seeking academic accreditation for programs, and improving institutional performance and academic reputation.",
+        "Sustainability and Resources: Diversifying funding sources, efficiently investing available resources, and developing the college's infrastructure and technology.",
+        "Community Service: Enhancing the college's role in community service, supporting volunteer initiatives and community activities, and providing training and consulting programs.",
+        "Relations and Cooperation: Expanding cooperation with universities and academic institutions, building partnerships with the private sector, and enhancing openness to international educational experiences."
+      ]
+    }
   }
 }
