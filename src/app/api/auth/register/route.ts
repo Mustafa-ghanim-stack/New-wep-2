@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Username already exists" }, { status: 409 });
     }
 
-    admins.push({ username, password });
+    admins.push({ username, password, displayName: '', email: '', role: 'editor', permissions: ['dashboard'] });
     await fs.writeFile(ADMINS_PATH, JSON.stringify(admins, null, 2), "utf-8");
 
     const token = Buffer.from(

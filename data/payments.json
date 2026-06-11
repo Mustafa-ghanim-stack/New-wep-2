@@ -1,0 +1,227 @@
+[
+  { "id":"pmt001","studentId":"stu001","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-10","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-12","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-03","status":"paid"}
+  ]},
+  { "id":"pmt002","studentId":"stu002","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-20","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"overdue"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt003","studentId":"stu003","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-08","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-05","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-01","status":"paid"}
+  ]},
+  { "id":"pmt004","studentId":"stu004","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-14","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"overdue"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt005","studentId":"stu005","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":null,"status":"pending"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"pending"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt006","studentId":"stu006","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-11","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-08","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt007","studentId":"stu007","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-09","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-10","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-07","status":"paid"}
+  ]},
+  { "id":"pmt008","studentId":"stu008","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-13","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"overdue"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt009","studentId":"stu009","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-15","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-14","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt010","studentId":"stu010","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-07","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-03","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-04-28","status":"paid"}
+  ]},
+  { "id":"pmt011","studentId":"stu011","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-16","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-20","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt012","studentId":"stu012","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-12","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-11","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-10","status":"paid"}
+  ]},
+  { "id":"pmt013","studentId":"stu013","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":null,"status":"pending"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"pending"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt014","studentId":"stu014","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-10","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-09","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-05","status":"paid"}
+  ]},
+  { "id":"pmt015","studentId":"stu015","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-08","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"overdue"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt016","studentId":"stu016","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-17","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-16","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt017","studentId":"stu017","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-06","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-04","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-02","status":"paid"}
+  ]},
+  { "id":"pmt018","studentId":"stu018","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-19","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"overdue"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt019","studentId":"stu019","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-11","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-07","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt020","studentId":"stu020","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-09","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-06","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-04","status":"paid"}
+  ]},
+  { "id":"pmt021","studentId":"stu021","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-13","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"overdue"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt022","studentId":"stu022","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":null,"status":"pending"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"pending"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt023","studentId":"stu023","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-10","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-08","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-06","status":"paid"}
+  ]},
+  { "id":"pmt024","studentId":"stu024","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-14","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-13","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt025","studentId":"stu025","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-12","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"overdue"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt026","studentId":"stu026","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-08","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-05","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-09","status":"paid"}
+  ]},
+  { "id":"pmt027","studentId":"stu027","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-11","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-09","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt028","studentId":"stu028","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-07","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-02","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-04-30","status":"paid"}
+  ]},
+  { "id":"pmt029","studentId":"stu029","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-16","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"overdue"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt030","studentId":"stu030","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":null,"status":"pending"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"pending"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt031","studentId":"stu031","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-09","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-07","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-08","status":"paid"}
+  ]},
+  { "id":"pmt032","studentId":"stu032","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-13","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-11","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt033","studentId":"stu033","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-10","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"overdue"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt034","studentId":"stu034","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-06","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-04","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-01","status":"paid"}
+  ]},
+  { "id":"pmt035","studentId":"stu035","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-14","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-15","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt036","studentId":"stu036","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-08","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-06","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-03","status":"paid"}
+  ]},
+  { "id":"pmt037","studentId":"stu037","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-11","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"overdue"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt038","studentId":"stu038","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-09","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-08","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt039","studentId":"stu039","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":null,"status":"pending"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"pending"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt040","studentId":"stu040","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-07","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-03","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-04-29","status":"paid"}
+  ]},
+  { "id":"pmt041","studentId":"stu041","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-12","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-10","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt042","studentId":"stu042","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-15","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":null,"status":"overdue"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt043","studentId":"stu043","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-10","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-09","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-06","status":"paid"}
+  ]},
+  { "id":"pmt044","studentId":"stu044","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-13","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-12","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":null,"status":"pending"}
+  ]},
+  { "id":"pmt045","studentId":"stu045","totalFee":1500000,"currency":"IQD","installments":[
+    {"id":"i1","label":"القسط الأول","amount":500000,"dueDate":"2024-09-15","paidDate":"2024-09-08","status":"paid"},
+    {"id":"i2","label":"القسط الثاني","amount":500000,"dueDate":"2025-01-15","paidDate":"2025-01-06","status":"paid"},
+    {"id":"i3","label":"القسط الثالث","amount":500000,"dueDate":"2025-05-15","paidDate":"2025-05-04","status":"paid"}
+  ]}
+]

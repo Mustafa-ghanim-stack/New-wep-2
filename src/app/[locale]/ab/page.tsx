@@ -20,6 +20,7 @@ export default async function AboutPage({ params }: Props) {
   const nav: any = (messages as any).nav;
   const topbar: any = (messages as any).topbar;
   const footerData: any = (messages as any).footer;
+  const logoSettings: any = (messages as any).logo || {};
   const goals: { title: string; items: string[] } = (messages as any).about.goals;
 
   const mapChildren = (children: any[]): any[] =>
@@ -44,7 +45,7 @@ export default async function AboutPage({ params }: Props) {
 
   return (
     <>
-      <Header nav={mappedNav} topbar={topbarData} searchLabel={site("search")} locale={locale} />
+      <Header nav={mappedNav} topbar={topbarData} searchLabel={site("search")} locale={locale} logoSettings={logoSettings} />
       <main className="min-h-screen">
         <div className="bg-primary/95">
           <div className="max-w-5xl mx-auto px-4 pt-20 pb-6">

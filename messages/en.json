@@ -17,40 +17,108 @@
         {
           "label": "About the College",
           "children": [
-            { "label": "About the College", "href": "/ab" },
-            { "label": "College Council", "href": "/college-council" },
-            { "label": "Faculty", "href": "/faculty" },
-            { "label": "College Statistics", "href": "/statistics" },
-            { "label": "College Rankings", "href": "/rankings" }
+            {
+              "label": "About the College",
+              "href": "/ab"
+            },
+            {
+              "label": "College Council",
+              "href": "/college-council"
+            },
+            {
+              "label": "Faculty",
+              "href": "/faculty"
+            },
+            {
+              "label": "College Statistics",
+              "href": "/statistics"
+            },
+            {
+              "label": "College Rankings",
+              "href": "/rankings"
+            }
           ]
         },
         {
           "label": "Departments & Divisions",
           "children": [
-            { "label": "Student Activities", "href": "/student-activities" },
-            { "label": "Academic Affairs", "href": "/academic-affairs" },
-            { "label": "IT Division", "href": "/it-division" },
-            { "label": "Psychological Guidance", "href": "/psychological-guidance" },
-            { "label": "Quality Assurance", "href": "/quality-assurance" },
-            { "label": "Continuing Education", "href": "/continuing-education" },
-            { "label": "Studies & Planning", "href": "/studies-planning" },
-            { "label": "Electronic Automation", "href": "/electronic-automation" }
+            {
+              "label": "Student Activities",
+              "href": "/student-activities"
+            },
+            {
+              "label": "Academic Affairs",
+              "href": "/academic-affairs"
+            },
+            {
+              "label": "IT Division",
+              "href": "/it-division"
+            },
+            {
+              "label": "Psychological Guidance",
+              "href": "/psychological-guidance"
+            },
+            {
+              "label": "Quality Assurance",
+              "href": "/quality-assurance"
+            },
+            {
+              "label": "Continuing Education",
+              "href": "/continuing-education"
+            },
+            {
+              "label": "Studies & Planning",
+              "href": "/studies-planning"
+            },
+            {
+              "label": "Electronic Automation",
+              "href": "/electronic-automation"
+            }
           ]
         },
         {
           "label": "Academic Departments",
           "children": [
-            { "label": "Dental Technology", "href": "/dental-technology" },
-            { "label": "Anesthesia Technology", "href": "/anesthesia-technology" },
-            { "label": "Radiology Technology", "href": "/radiology-technology" },
-            { "label": "Optics Technology", "href": "/optics-technology" },
-            { "label": "Emergency Medicine", "href": "/emergency-medicine" },
-            { "label": "Community Health", "href": "/community-health" },
-            { "label": "Physical Therapy", "href": "/physical-therapy" },
-            { "label": "Medical Physics & Radiotherapy", "href": "/medical-physics-radiotherapy" },
-            { "label": "Oil & Gas Engineering", "href": "/oil-gas-engineering" },
-            { "label": "Cybersecurity & Cloud Computing", "href": "/cybersecurity-cloud-computing" },
-            { "label": "Construction Engineering", "href": "/construction-engineering" }
+            {
+              "label": "Dental Technology",
+              "href": "/tuition-fees/dental"
+            },
+            {
+              "label": "Anesthesia Technology",
+              "href": "/tuition-fees/anesthesia"
+            },
+            {
+              "label": "Radiology & Sonar Technology",
+              "href": "/tuition-fees/radiology"
+            },
+            {
+              "label": "Optics Technology",
+              "href": "/tuition-fees/optics"
+            },
+            {
+              "label": "Emergency Medicine",
+              "href": "/tuition-fees/emergency"
+            },
+            {
+              "label": "Community Health",
+              "href": "/tuition-fees/community-health"
+            },
+            {
+              "label": "Medical Physics & Radiotherapy",
+              "href": "/tuition-fees/health-physics"
+            },
+            {
+              "label": "Oil & Gas Engineering",
+              "href": "/tuition-fees/oil-gas"
+            },
+            {
+              "label": "Cybersecurity & Cloud Computing",
+              "href": "/tuition-fees/cybersecurity"
+            },
+            {
+              "label": "Construction Engineering",
+              "href": "/tuition-fees/construction"
+            }
           ]
         }
       ]
@@ -76,6 +144,10 @@
       ]
     },
     {
+      "label": "Scientific Journal",
+      "href": "/scientific-journal"
+    },
+    {
       "label": "Campus Life",
       "children": [
         "Facilities",
@@ -97,55 +169,119 @@
   "hero": [
     {
       "title": "Tradition & Innovation",
-      "desc": "Al-Sharq College combines the authenticity of time-honored education with the latest learning methods to graduate future leaders."
+      "desc": "Al-Sharq College combines the authenticity of time-honored education with the latest learning methods to graduate future leaders.",
+      "img": "/images/slide1.jpg?t=1781134289818",
+      "titleStyle": {},
+      "descStyle": {}
     },
     {
       "title": "More Than Just Study",
-      "desc": "An integrated university environment that combines academic excellence with a vibrant student life."
+      "desc": "An integrated university environment that combines academic excellence with a vibrant student life.",
+      "img": "/images/slide2.jpg?t=1781134320695",
+      "titleStyle": {},
+      "descStyle": {}
     },
     {
       "title": "Pioneering Research",
-      "desc": "We focus on innovative scientific research to meet the challenges of the present and future."
+      "desc": "We focus on innovative scientific research to meet the challenges of the present and future.",
+      "img": "/images/slide3.jpg?t=1781134379003",
+      "titleStyle": {},
+      "descStyle": {}
     },
     {
       "title": "Welcome",
-      "desc": "We welcome students and faculty from all over the world to our campus."
+      "desc": "We welcome students and faculty from all over the world to our campus.",
+      "img": "/images/slide4.jpg?t=1781134521599",
+      "titleStyle": {},
+      "descStyle": {}
     }
   ],
+  "heroBanner": {
+    "title": "Studying at Al-Sharq College of Specialized Technical Sciences",
+    "body": "Your educational journey at Al-Sharq College begins through specialized technical academic programs, designed to equip students with the scientific knowledge and practical skills needed to meet the demands of the local and regional job market.\n\nBy adopting modern curricula that combine theoretical and applied aspects, the college provides a solid scientific foundation across its various disciplines, focusing on developing analytical thinking, scientific reasoning, and professional skills — preparing students for a successful academic and professional career in their specialized fields.",
+    "titleStyle": {
+      "font": "Cairo"
+    },
+    "bodyStyle": {
+      "font": "Cairo"
+    }
+  },
   "quicklinks": [],
   "features": [
     {
       "title": "Academic Programs",
       "desc": "Over 140 diverse study programs in various scientific and humanitarian disciplines.",
-      "more": "Read more →"
+      "more": "Read more →",
+      "href": "#",
+      "img": "",
+      "titleStyle": {},
+      "descStyle": {},
+      "youtube": "https://www.youtube.com/watch?v=7DDprhK7Lr0&t=38s",
+      "category": "",
+      "date": "2026-02-13"
     },
     {
       "title": "Student Portal",
       "desc": "Organize daily academic life through the electronic portal system.",
-      "more": "Read more →"
+      "more": "Read more →",
+      "href": "#",
+      "img": "/images/feature2.jpg?t=1781200332177",
+      "titleStyle": {},
+      "descStyle": {},
+      "youtube": "",
+      "category": "",
+      "date": "2026-02-16"
     },
     {
       "title": "Open Day",
       "desc": "Learn about the study programs and specializations available for 2026.",
-      "more": "Read more →"
+      "more": "Read more →",
+      "href": "#",
+      "img": "/images/feature3.jpg?t=1781183808685",
+      "titleStyle": {},
+      "descStyle": {},
+      "youtube": "",
+      "category": "",
+      "date": "2026-04-05"
+    },
+    {
+      "title": "",
+      "desc": "",
+      "more": "",
+      "href": "#",
+      "img": "/images/feature4.jpg?t=1781183819371",
+      "titleStyle": {},
+      "descStyle": {},
+      "youtube": "",
+      "category": "",
+      "date": ""
     }
   ],
   "sidecards": [
     {
       "title": "Research Database",
-      "desc": "Browse research projects and scientific publications",
-      "more": "Read more →"
+      "desc": "Browse research projects and scientific publications by faculty members.",
+      "more": "Read more ",
+      "href": "#",
+      "img": "/images/sidecard1.jpg?t=1781200422174",
+      "titleStyle": {},
+      "descStyle": {}
     },
     {
       "title": "Diversity - Family - Openness",
-      "desc": "We believe in diversity, equal opportunity, and openness to the world",
-      "more": "Read more →"
+      "desc": "We believe in diversity, equal opportunity, and openness to the world.",
+      "more": "Read more ",
+      "href": "#",
+      "img": "/images/sidecard2.jpg?t=1781199283046",
+      "titleStyle": {},
+      "descStyle": {}
     }
   ],
   "highlight": {
     "title": "Medical Information Engineering",
     "desc": "This program combines technology and medicine to qualify cadres capable of developing innovative solutions for the future of healthcare.",
     "cta": "Discover the Program",
+    "href": "",
     "campaign_title": "Educational Institutions Show Their Stance!",
     "campaign_sub": "Freedom of education and research is the foundation of our democracy",
     "campaign_desc": "We believe in open dialogue and free scientific exchange. Al-Sharq College supports democratic values and peaceful coexistence without discrimination.",
@@ -171,22 +307,133 @@
         "date": "May 7, 2026",
         "title": "Ranking 2026: Al-Sharq College in advanced positions"
       }
-    ]
+    ],
+    "latestNewsTitleStyle": {
+      "font": "Cairo",
+      "y": 10
+    }
   },
   "tuitionFees": {
     "title": "Tuition Fees",
     "viewAll": "View detailed tuition fees for all departments",
+    "detailsTitle": "Tuition Fees Details",
+    "department": "Department",
+    "branch": "Branch",
+    "morning": "Morning",
+    "evening": "Evening",
+    "morningRate": "Morning Rate",
+    "eveningRate": "Evening Rate",
     "departments": [
-      { "name": "Cybersecurity & Cloud Computing", "branch": "Scientific", "morning": "3,000,000", "evening": "2,250,000", "morningRate": "59.50%", "eveningRate": "61.50%", "img": "/images/departments/cs.jpg" },
-      { "name": "Optics Techniques", "branch": "Biology", "morning": "2,750,000", "evening": "0", "morningRate": "69.50%", "eveningRate": "64.50%", "img": "/images/departments/cs2.jpg" },
-      { "name": "Health Physics & Radiotherapy", "branch": "Scientific", "morning": "2,500,000", "evening": "0", "morningRate": "59.50%", "eveningRate": "0.00%", "img": "/images/departments/sc1.jpg" },
-      { "name": "Anesthesia Techniques", "branch": "Biology", "morning": "3,000,000", "evening": "3,000,000", "morningRate": "70.00%", "eveningRate": "65.00%", "img": "/images/departments/cs3.jpg" },
-      { "name": "Emergency & First Aid", "branch": "Scientific", "morning": "1,500,000", "evening": "0", "morningRate": "59.50%", "eveningRate": "0.00%", "img": "/images/departments/cs4.png" },
-      { "name": "Physiotherapy & Rehabilitation", "branch": "Scientific", "morning": "2,750,000", "evening": "0", "morningRate": "59.50%", "eveningRate": "0.00%", "img": "/images/departments/cs5.jpg" },
-      { "name": "Oil & Gas Engineering", "branch": "Scientific", "morning": "3,000,000", "evening": "0", "morningRate": "59.50%", "eveningRate": "0.00%", "img": "/images/departments/cs6.jpg" },
-      { "name": "Dental Prosthetics", "branch": "Biology", "morning": "2,500,000", "evening": "2,250,000", "morningRate": "59.50%", "eveningRate": "64.50%", "img": "/images/departments/cs7.jpg" },
-      { "name": "Construction Engineering", "branch": "Scientific", "morning": "1,500,000", "evening": "0", "morningRate": "59.50%", "eveningRate": "0.00%", "img": "/images/departments/cs10.jpg" },
-      { "name": "Radiology Techniques", "branch": "Scientific", "morning": "3,000,000", "evening": "2,750,000", "morningRate": "69.50%", "eveningRate": "64.50%" }
+      {
+        "slug": "cybersecurity",
+        "name": "Cybersecurity & Cloud Computing",
+        "desc": "Prepares specialists in information security and cloud computing to protect systems and networks from cyber threats",
+        "branch": "Scientific",
+        "morning": "3,000,000",
+        "evening": "2,250,000",
+        "morningRate": "59.50%",
+        "eveningRate": "61.50%",
+        "img": "/images/departments/cs.jpg"
+      },
+      {
+        "slug": "optics",
+        "name": "Optics Techniques",
+        "desc": "Trains specialists in optics, eyeglass manufacturing, contact lenses, and vision problem diagnosis",
+        "branch": "Biology",
+        "morning": "2,750,000",
+        "evening": "0",
+        "morningRate": "69.50%",
+        "eveningRate": "64.50%",
+        "img": "/images/departments/cs2.jpg"
+      },
+      {
+        "slug": "health-physics",
+        "name": "Health Physics & Radiotherapy",
+        "desc": "Prepares specialized engineers in medical physics applications, radiotherapy, and radiation protection",
+        "branch": "Scientific",
+        "morning": "2,500,000",
+        "evening": "0",
+        "morningRate": "59.50%",
+        "eveningRate": "0.00%",
+        "img": "/images/departments/sc1.jpg"
+      },
+      {
+        "slug": "anesthesia",
+        "name": "Anesthesia Techniques",
+        "desc": "Trains specialists in anesthesia, intensive care, and patient resuscitation during surgical operations",
+        "branch": "Biology",
+        "morning": "3,000,000",
+        "evening": "3,000,000",
+        "morningRate": "70.00%",
+        "eveningRate": "65.00%",
+        "img": "/images/departments/cs3.jpg"
+      },
+      {
+        "slug": "emergency",
+        "name": "Emergency & First Aid",
+        "desc": "Trains students to handle emergency cases, provide first aid, and perform CPR",
+        "branch": "Scientific",
+        "morning": "1,500,000",
+        "evening": "0",
+        "morningRate": "59.50%",
+        "eveningRate": "0.00%",
+        "img": "/images/departments/cs4.png"
+      },
+      {
+        "slug": "community-health",
+        "name": "Community Health Techniques",
+        "desc": "Qualifies health professionals capable of promoting public health and disease prevention in the community",
+        "branch": "Scientific",
+        "morning": "2,750,000",
+        "evening": "0",
+        "morningRate": "59.50%",
+        "eveningRate": "0.00%",
+        "img": "/images/departments/cs5.jpg"
+      },
+      {
+        "slug": "oil-gas",
+        "name": "Oil & Gas Engineering",
+        "desc": "Prepares specialized engineers in oil and gas exploration, extraction, and refining",
+        "branch": "Scientific",
+        "morning": "3,000,000",
+        "evening": "0",
+        "morningRate": "59.50%",
+        "eveningRate": "0.00%",
+        "img": "/images/departments/cs6.jpg"
+      },
+      {
+        "slug": "dental",
+        "name": "Dental Prosthetics",
+        "desc": "Trains specialized technicians in manufacturing and fitting dental prosthetics and orthodontics",
+        "branch": "Biology",
+        "morning": "2,500,000",
+        "evening": "2,250,000",
+        "morningRate": "59.50%",
+        "eveningRate": "64.50%",
+        "img": "/images/departments/cs7.jpg"
+      },
+      {
+        "slug": "construction",
+        "name": "Construction Engineering",
+        "desc": "Qualifies engineers specialized in designing, executing, and managing construction projects and infrastructure",
+        "branch": "Scientific",
+        "morning": "1,500,000",
+        "evening": "0",
+        "morningRate": "59.50%",
+        "eveningRate": "0.00%",
+        "img": "/images/departments/cs11.jpg"
+      },
+      {
+        "slug": "radiology",
+        "name": "Radiology & Sonar Techniques",
+        "desc": "Trains specialized technicians in diagnostic and interventional medical imaging using ultrasound and radiation",
+        "branch": "Scientific",
+        "morning": "3,000,000",
+        "evening": "2,750,000",
+        "morningRate": "69.50%",
+        "eveningRate": "64.50%",
+        "img": "/images/departments/cs12.jpg"
+      }
     ]
   },
   "events": {
@@ -246,7 +493,11 @@
       "tiktok": "https://www.tiktok.com/@sharquni",
       "telegram": "https://t.me/alsharquni2024"
     },
-    "copyright": "© 2026 Al-Sharq College. All rights reserved."
+    "copyright": "© 2026 Al-Sharq College. All rights reserved.",
+    "mapUrl": "https://maps.google.com/maps?q=30.4689266,47.8343198&z=17&output=embed",
+    "copyrightStyle": {
+      "font": ""
+    }
   },
   "chat": {
     "title": "AI Assistant",
@@ -308,6 +559,39 @@
         "Community Service: Enhancing the college's role in community service, supporting volunteer initiatives and community activities, and providing training and consulting programs.",
         "Relations and Cooperation: Expanding cooperation with universities and academic institutions, building partnerships with the private sector, and enhancing openness to international educational experiences."
       ]
+    }
+  },
+  "logo": {
+    "url": "",
+    "width": "",
+    "alt": "كلية الشرق",
+    "favicon": "",
+    "top": "52",
+    "start": "220"
+  },
+  "styles": {},
+  "topbarStyles": {},
+  "navStyles": {
+    "0": {
+      "font": "Cairo"
+    },
+    "1": {
+      "font": "Cairo"
+    },
+    "2": {
+      "font": "Cairo"
+    },
+    "3": {
+      "font": "Cairo"
+    },
+    "4": {
+      "font": "Cairo"
+    },
+    "5": {
+      "font": "Cairo"
+    },
+    "6": {
+      "font": "Cairo"
     }
   }
 }

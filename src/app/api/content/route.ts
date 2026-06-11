@@ -1,28 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import { verifyToken, extractToken } from "@/lib/auth";
 
 const messagesDir = path.join(process.cwd(), "messages");
 const globalsCssPath = path.join(process.cwd(), "src", "app", "globals.css");
-const ADMINS_PATH = path.join(process.cwd(), "data", "admins.json");
-
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
-
-function verifyToken(token: string): boolean {
-  try {
-    const decoded = JSON.parse(Buffer.from(token, "base64").toString("utf-8"));
-    return decoded.exp > Date.now();
-  } catch {
-    return false;
-  }
-}
 
 function isAuthorized(request: NextRequest): boolean {
-  const pwd = request.nextUrl.searchParams.get("pwd");
-  if (pwd === ADMIN_PASSWORD) return true;
-  const token = request.nextUrl.searchParams.get("token");
-  if (token && verifyToken(token)) return true;
-  return false;
+  const token = extractToken(request);
+  return !!token && !!verifyToken(token);
 }
 
 async function readJson(locale: string) {
@@ -69,6 +55,7 @@ async function writeCssVars(vars: Record<string, string>) {
       for (const [, line] of existing) {
         newBlock += line + "\n";
       }
+      newBlock += "}";
       return newBlock;
     });
   }

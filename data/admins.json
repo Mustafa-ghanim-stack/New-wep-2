@@ -1,6 +1,38 @@
 [
   {
-    "username": "admin",
-    "password": "admin123"
+    "username": "Admin",
+    "password": "$2b$10$aL/apW91uN25jJVZA3SMouicPS9GQsdrvTSyuxtDnrthg3VEL7Wsq",
+    "displayName": "المشرف الرئيسي",
+    "email": "",
+    "role": "superadmin",
+    "permissions": [
+      "dashboard",
+      "events",
+      "students",
+      "professors",
+      "courses",
+      "library",
+      "departments",
+      "mailbox",
+      "content",
+      "developer",
+      "system"
+    ]
+  },
+  {
+    "username": "Admin-2",
+    "password": "1234",
+    "displayName": "أستاذ علي ",
+    "email": "",
+    "role": "editor",
+    "permissions": [
+      "dashboard",
+      "events",
+      "students",
+      "library",
+      "mailbox",
+      "departments",
+      "professors"
+    ]
   }
 ]

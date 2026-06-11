@@ -14,7 +14,7 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html suppressHydrationWarning>
+    <html dir="ltr" suppressHydrationWarning>
       <body className={cairo.variable}>{children}</body>
     </html>
   );

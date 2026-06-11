@@ -6,10 +6,23 @@ import { usePathname } from "next/navigation";
 import AiChat from "./AiChat";
 
 // ----- Types -----
+interface TextStyle { size?: string; font?: string; align?: string; x?: number; y?: number; }
+function applyStyle(s?: TextStyle): React.CSSProperties {
+  if (!s) return {};
+  return {
+    fontSize: s.size ? `${s.size}px` : undefined,
+    fontFamily: s.font || undefined,
+    textAlign: s.align as React.CSSProperties['textAlign'] || undefined,
+    transform: (s.x || s.y) ? `translate(${s.x ?? 0}px, ${s.y ?? 0}px)` : undefined,
+  };
+}
+
 interface SliderItem {
   title: string;
   desc: string;
   img: string;
+  titleStyle?: TextStyle;
+  descStyle?: TextStyle;
 }
 
 interface NewsItem {
@@ -68,23 +81,45 @@ interface NavChild {
   children?: NavChild[];
 }
 
-export function Header({ nav, topbar, searchLabel, locale }: { nav: { label: string; href: string; children?: NavChild[] }[]; topbar: { english: string; arabic: string; login: string }; searchLabel: string; locale: string }) {
+const EXISTING_ROUTES = ['/ab', '/tuition-fees'];
+function isLiveRoute(href: string): boolean {
+  if (!href || href === '#') return false;
+  const path = href.replace(/^\/(ar|en)/, '');
+  return EXISTING_ROUTES.some(r => path === r || path.startsWith(r + '/'));
+}
+const noNav = (href: string) => (e: React.MouseEvent) => { if (!isLiveRoute(href)) e.preventDefault(); };
+
+export function Header({ nav, navStyles, topbar, searchLabel, locale, logoSettings }: { nav: { label: string; href: string; children?: NavChild[] }[]; navStyles?: Record<string, TextStyle>; topbar: { english: string; arabic: string; login: string }; searchLabel: string; locale: string; logoSettings?: any }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [openSubDropdown, setOpenSubDropdown] = useState<string | null>(null);
   const [showContact, setShowContact] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin]         = useState(false);
+  const [isStudent, setIsStudent]     = useState(false);
+  const [isProfessor, setIsProfessor] = useState(false);
   const pathname = usePathname();
 
-  useEffect(() => { setIsAdmin(!!localStorage.getItem("admin_token")); }, []);
+  useEffect(() => {
+    setIsAdmin(!!localStorage.getItem("admin_token") || !!sessionStorage.getItem("admin_token"));
+    setIsStudent(!!(localStorage.getItem("student_token") || sessionStorage.getItem("student_token")));
+    setIsProfessor(!!(localStorage.getItem("professor_token") || sessionStorage.getItem("professor_token")));
+  }, []);
   const switchLocale = locale === "ar" ? "en" : "ar";
   const pathWithoutLocale = pathname.replace(/^\/(ar|en)\/?/, "/");
   const switchHref = `/${switchLocale}${pathWithoutLocale}`;
 
   return (
     <header className="bg-white shadow-md relative">
-      <a href={`/${locale}`} className="absolute" style={{ insetInlineStart: '295px', top: '64px' }}>
-        <img src="/images/logo.png" alt="كلية الشرق" className="h-32 w-auto" />
+      <a href={`/${locale}`} className="absolute" style={{
+        insetInlineStart: logoSettings?.start ? `${logoSettings.start}px` : '295px',
+        top: logoSettings?.top ? `${logoSettings.top}px` : '64px',
+      }}>
+        <img
+          src={logoSettings?.url || '/images/logo.png'}
+          alt={logoSettings?.alt || 'كلية الشرق'}
+          style={{ width: logoSettings?.width ? `${logoSettings.width}px` : undefined }}
+          className="h-32 w-auto"
+        />
       </a>
       <div className="bg-primary text-white text-sm">
         <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
@@ -93,8 +128,12 @@ export function Header({ nav, topbar, searchLabel, locale }: { nav: { label: str
             <span className="text-white/50">|</span>
             {isAdmin ? (
               <a href="/admin" className="hover:underline">{locale === "ar" ? "لوحة التحكم" : "Admin Panel"}</a>
+            ) : isProfessor ? (
+              <a href="/professor/panel" className="hover:underline">{locale === "ar" ? "لوحة التدريسي" : "Professor Panel"}</a>
+            ) : isStudent ? (
+              <a href="/student/panel" className="hover:underline">{locale === "ar" ? "لوحة الطالب" : "Student Panel"}</a>
             ) : (
-              <a href="/login" className="hover:underline">{topbar.login}</a>
+              <a href={`/login?lang=${locale}`} className="hover:underline">{topbar.login}</a>
             )}
           </div>
           <div className="flex items-center gap-3">
@@ -114,7 +153,7 @@ export function Header({ nav, topbar, searchLabel, locale }: { nav: { label: str
         <div className="flex items-end justify-center h-44">
 
           <nav className="hidden lg:flex items-center gap-1 mb-6">
-            {nav.map((item) => (
+            {nav.map((item, idx) => (
               <div
                 key={item.label}
                 className="relative group"
@@ -123,7 +162,9 @@ export function Header({ nav, topbar, searchLabel, locale }: { nav: { label: str
               >
                 <a
                   href={item.href}
+                  onClick={noNav(item.href)}
                   className="px-4 py-2 text-base text-text-dark hover:text-primary font-medium rounded-md hover:bg-gray-50 transition-colors"
+                  style={applyStyle(navStyles?.[String(idx)])}
                 >
                   {item.label}
                   {item.children && (
@@ -156,6 +197,7 @@ export function Header({ nav, topbar, searchLabel, locale }: { nav: { label: str
                                   <a
                                     key={sub.label}
                                     href={sub.href || "#"}
+                                    onClick={noNav(sub.href || "#")}
                                     className="flex items-center gap-3 px-4 py-2 text-base text-text-dark hover:bg-primary hover:text-white transition-colors"
                                   >
                                     <span className="w-2 h-2 bg-primary flex-shrink-0"></span>
@@ -168,6 +210,7 @@ export function Header({ nav, topbar, searchLabel, locale }: { nav: { label: str
                         ) : (
                           <a
                             href={child.href || "#"}
+                            onClick={noNav(child.href || "#")}
                             className="flex items-center gap-3 px-4 py-2 text-base text-text-dark hover:bg-primary hover:text-white transition-colors"
                           >
                             <span className="w-2 h-2 bg-primary flex-shrink-0"></span>
@@ -205,7 +248,10 @@ export function Header({ nav, topbar, searchLabel, locale }: { nav: { label: str
               <a
                 href={item.href}
                 className="block px-4 py-3 text-sm text-text-dark hover:bg-gray-50 border-b"
-                onClick={() => item.children || setMenuOpen(false)}
+                onClick={e => {
+                  if (!isLiveRoute(item.href)) e.preventDefault();
+                  else setMenuOpen(false);
+                }}
               >
                 {item.label}
               </a>
@@ -233,6 +279,7 @@ export function Header({ nav, topbar, searchLabel, locale }: { nav: { label: str
                       ) : (
                         <a
                           href={child.href || "#"}
+                          onClick={noNav(child.href || "#")}
                           className="block px-8 py-2 text-sm text-text-light hover:text-primary border-b"
                         >
                           {child.label}
@@ -290,7 +337,7 @@ function HeroSlider({ slides }: { slides: SliderItem[] }) {
   }, [next]);
 
   return (
-    <section className="max-w-[1840px] mx-auto px-4 relative h-[400px] md:h-[700px] overflow-hidden bg-gray-900 rounded-2xl mt-6">
+    <section className="max-w-[1840px] mx-auto px-4 relative h-[400px] md:h-[700px] overflow-hidden bg-gray-900 rounded-2xl" style={{ marginTop: '80px' }}>
       {slides.map((slide, i) => (
         <div
           key={i}
@@ -305,8 +352,8 @@ function HeroSlider({ slides }: { slides: SliderItem[] }) {
           />
           <div className="absolute inset-0 z-20 flex items-center">
             <div className="px-4 text-white">
-              <h1 className="text-2xl md:text-4xl font-bold mb-2">{slide.title}</h1>
-              <p className="text-sm md:text-base max-w-2xl text-white/90">{slide.desc}</p>
+              <h1 className="font-bold mb-2" style={{ fontSize: '2rem', ...applyStyle(slide.titleStyle) }}>{slide.title}</h1>
+              <p className="max-w-2xl text-white/90" style={{ fontSize: '1rem', ...applyStyle(slide.descStyle) }}>{slide.desc}</p>
             </div>
           </div>
         </div>
@@ -342,6 +389,28 @@ function HeroSlider({ slides }: { slides: SliderItem[] }) {
   );
 }
 
+function HeroBanner({ data, locale }: { data: { title: string; body: string; titleStyle?: TextStyle; bodyStyle?: TextStyle }; locale: string }) {
+  if (!data?.title && !data?.body) return null;
+  return (
+    <section className="bg-white py-10">
+      <div className="max-w-[1840px] mx-auto px-6 md:px-12">
+        <div className={`border-s-4 border-primary ps-6 ${locale === "ar" ? "text-right" : "text-left"}`}>
+          {data.title && (
+            <h2 className="font-bold text-text-dark mb-4" style={{ fontSize: '1.5rem', ...applyStyle(data.titleStyle) }}>
+              {data.title}
+            </h2>
+          )}
+          {data.body && data.body.split("\n\n").map((para, i) => (
+            <p key={i} className="leading-relaxed mb-3 last:mb-0" style={{ fontSize: '1rem', ...applyStyle(data.bodyStyle) }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function QuickLinks({ items }: { items: { label: string; href: string }[] }) {
   return (
     <section className="bg-white py-8">
@@ -367,40 +436,92 @@ function QuickLinks({ items }: { items: { label: string; href: string }[] }) {
   );
 }
 
-function FeatureCards({ items }: { items: { title: string; desc: string; more: string; href: string }[] }) {
+function getYouTubeId(url: string): string | null {
+  if (!url) return null;
+  const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+function truncateWords(text: string, n: number): string {
+  if (!text) return '';
+  const words = text.trim().split(/\s+/);
+  return words.length <= n ? text : words.slice(0, n).join(' ') + '...';
+}
+
+const AR_MONTHS = ['كانون الثاني','شباط','آذار','نيسان','أيار','حزيران','تموز','آب','أيلول','تشرين الأول','تشرين الثاني','كانون الأول'];
+function formatDate(dateStr: string, locale: string): string {
+  if (!dateStr) return '';
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    if (locale === 'ar') {
+      const day = d.getDate().toLocaleString('ar-EG');
+      const month = AR_MONTHS[d.getMonth()];
+      const year = d.getFullYear().toLocaleString('ar-EG');
+      return `${day} ${month} ${year}`;
+    }
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  } catch { return dateStr; }
+}
+
+function FeatureCards({ items, locale }: { items: { title: string; desc: string; more: string; href: string; img?: string; youtube?: string; category?: string; date?: string; titleStyle?: TextStyle; descStyle?: TextStyle }[]; locale: string }) {
   return (
     <section className="bg-gray-light py-16">
       <div className="max-w-[1840px] mx-auto px-4">
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {items.map((feat, i) => (
-            <a
-              key={i}
-              href={feat.href}
-              className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
-            >
-              <div className="h-48 bg-gray-200 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10" />
-                <div className="w-full h-full bg-gradient-to-br from-primary to-primary-light" />
-                <div className="absolute inset-0 z-20 flex items-end p-6">
-                  <h3 className="text-white font-bold text-xl">{feat.title}</h3>
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {items.map((feat, i) => {
+            const ytId = getYouTubeId(feat.youtube || '');
+            const detailHref = `/${locale}/feature/${i}`;
+            return (
+              <div key={i} className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col">
+                {/* Media */}
+                <div className="relative overflow-hidden" style={{ height: 200 }}>
+                  {ytId ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}`}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title={feat.title}
+                    />
+                  ) : feat.img ? (
+                    <img src={feat.img} alt={feat.title} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-primary to-primary-light" />
+                  )}
+                  {feat.category && (
+                    <span className="absolute top-3 end-3 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full z-10">
+                      {feat.category}
+                    </span>
+                  )}
+                </div>
+                {/* Body */}
+                <div className="p-5 flex flex-col flex-1 min-h-[200px]">
+                  {feat.date && (
+                    <span className="text-xs text-primary font-medium mb-2 block">
+                      {formatDate(feat.date, locale)}
+                    </span>
+                  )}
+                  <h3 className="font-bold text-text-dark leading-snug mb-3" style={{ fontSize: '1rem', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', ...applyStyle(feat.titleStyle) }}>
+                    {feat.title}
+                  </h3>
+                  <div className="mt-auto">
+                    <a href={detailHref} className="text-primary font-semibold text-sm hover:underline inline-flex items-center gap-1">
+                      {feat.more || (locale === 'ar' ? 'اقرأ المزيد' : 'Read More')}
+                      <span className="text-base leading-none">{locale === 'ar' ? '›' : '›'}</span>
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div className="p-6">
-                <p className="text-text-light text-sm leading-relaxed">{feat.desc}</p>
-                <span className="inline-block mt-4 text-primary font-semibold text-sm group-hover:underline">
-                  {feat.more}
-                </span>
-              </div>
-            </a>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
 
-function SideCards({ items }: { items: { title: string; desc: string; more: string; href: string }[] }) {
+function SideCards({ items }: { items: { title: string; desc: string; more: string; href: string; img?: string; titleStyle?: TextStyle; descStyle?: TextStyle }[] }) {
   return (
     <section className="bg-gray-light pb-16">
       <div className="max-w-[1840px] mx-auto px-4">
@@ -411,10 +532,16 @@ function SideCards({ items }: { items: { title: string; desc: string; more: stri
               href={card.href}
               className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex"
             >
-              <div className="w-2/5 bg-gradient-to-br from-primary to-primary-light min-h-[180px]" />
+              <div className="w-2/5 min-h-[180px] flex-shrink-0 overflow-hidden">
+                {card.img ? (
+                  <img src={card.img} alt={card.title} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-primary to-primary-light" />
+                )}
+              </div>
               <div className="w-3/5 p-6 flex flex-col justify-center">
-                <h3 className="font-bold text-lg text-text-dark mb-2">{card.title}</h3>
-                <p className="text-text-light text-sm">{card.desc}</p>
+                <h3 className="font-bold text-text-dark mb-2" style={{ fontSize: '1.1rem', ...applyStyle(card.titleStyle) }}>{card.title}</h3>
+                <p style={{ fontSize: '0.875rem', ...applyStyle(card.descStyle) }}>{card.desc}</p>
                 <span className="inline-block mt-3 text-primary font-semibold text-sm group-hover:underline">
                   {card.more}
                 </span>
@@ -427,14 +554,14 @@ function SideCards({ items }: { items: { title: string; desc: string; more: stri
   );
 }
 
-function HighlightSection({ data }: { data: { title: string; desc: string; cta: string; campaign_title: string; campaign_sub: string; campaign_desc: string; campaign_cta: string } }) {
+function HighlightSection({ data }: { data: any }) {
   return (
     <section className="bg-white py-16">
       <div className="max-w-[1840px] mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-gradient-to-br from-primary to-primary-dark rounded-2xl p-8 text-white">
-            <h3 className="text-2xl font-bold mb-4">{data.title}</h3>
-            <p className="text-white/80 leading-relaxed mb-6">{data.desc}</p>
+            <h3 className="text-2xl font-bold mb-4" style={applyStyle(data.titleStyle)}>{data.title}</h3>
+            <p className="text-white/80 leading-relaxed mb-6" style={applyStyle(data.descStyle)}>{data.desc}</p>
             <a href="#" className="inline-block bg-white text-primary font-bold px-6 py-3 rounded-lg hover:bg-accent hover:text-white transition-all">
               {data.cta}
             </a>
@@ -448,11 +575,11 @@ function HighlightSection({ data }: { data: { title: string; desc: string; cta: 
                 </svg>
               </div>
               <div>
-                <h3 className="font-bold text-lg text-text-dark">{data.campaign_title}</h3>
-                <p className="text-xs text-text-light">{data.campaign_sub}</p>
+                <h3 className="font-bold text-lg text-text-dark" style={applyStyle(data.campaignTitleStyle)}>{data.campaign_title}</h3>
+                <p className="text-xs text-text-light" style={applyStyle(data.campaignSubStyle)}>{data.campaign_sub}</p>
               </div>
             </div>
-            <p className="text-text-light text-sm leading-relaxed">{data.campaign_desc}</p>
+            <p className="text-text-light text-sm leading-relaxed" style={applyStyle(data.campaignDescStyle)}>{data.campaign_desc}</p>
             <a href="#" className="inline-block mt-4 text-primary font-semibold text-sm hover:underline">{data.campaign_cta}</a>
           </div>
         </div>
@@ -461,13 +588,43 @@ function HighlightSection({ data }: { data: { title: string; desc: string; cta: 
   );
 }
 
-function NewsEvents({ news, events, newsTitle, eventsTitle, newsAll, eventsAll }: { news: NewsItem[]; events: NewsItem[]; newsTitle: string; eventsTitle: string; newsAll: string; eventsAll: string }) {
+function LatestNews({ items, title, all, locale }: { items: NewsItem[]; title: string; all: string; locale: string }) {
+  const isRtl = locale === 'ar';
+  return (
+    <section className="w-full py-12 bg-white border-b border-neutral-100">
+      <div className="max-w-[1840px] mx-auto px-4">
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3">
+            <div className="w-1 h-8 bg-primary rounded-full" />
+            <h2 className="text-2xl font-bold text-text-dark">{title}</h2>
+          </div>
+          <a href="#" className="text-sm font-semibold text-primary hover:underline flex items-center gap-1">
+            {all}
+          </a>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {items.slice(0, 4).map((item, i) => (
+            <a key={i} href={item.href || '#'} className="group block bg-neutral-50 hover:bg-primary rounded-2xl p-5 transition-all duration-300 border border-neutral-100 hover:border-primary hover:shadow-lg">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-2 h-2 rounded-full bg-primary group-hover:bg-white transition-colors flex-shrink-0" />
+                <span className="text-xs font-semibold text-primary group-hover:text-white/80 transition-colors">{item.date}</span>
+              </div>
+              <h4 className="text-text-dark group-hover:text-white font-medium leading-relaxed text-sm transition-colors" dir={isRtl ? 'rtl' : 'ltr'}>{item.title}</h4>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function NewsEvents({ news, events, newsTitle, eventsTitle, newsAll, eventsAll, newsTitleStyle, eventsTitleStyle }: { news: NewsItem[]; events: NewsItem[]; newsTitle: string; eventsTitle: string; newsAll: string; eventsAll: string; newsTitleStyle?: TextStyle; eventsTitleStyle?: TextStyle }) {
   return (
     <section className="bg-gray-light py-16">
       <div className="max-w-[1840px] mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12">
           <div>
-            <h2 className="text-2xl font-bold text-text-dark mb-6">{newsTitle}</h2>
+            <h2 className="text-2xl font-bold text-text-dark mb-6" style={applyStyle(newsTitleStyle)}>{newsTitle}</h2>
             <div className="space-y-4">
               {news.map((item, i) => (
                 <a key={i} href={item.href} className="block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all">
@@ -480,7 +637,7 @@ function NewsEvents({ news, events, newsTitle, eventsTitle, newsAll, eventsAll }
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold text-text-dark mb-6">{eventsTitle}</h2>
+            <h2 className="text-2xl font-bold text-text-dark mb-6" style={applyStyle(eventsTitleStyle)}>{eventsTitle}</h2>
             <div className="space-y-4">
               {events.map((event, i) => (
                 <a key={i} href={event.href} className="block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all">
@@ -497,9 +654,19 @@ function NewsEvents({ news, events, newsTitle, eventsTitle, newsAll, eventsAll }
   );
 }
 
-function Card({ dept, locale }: { dept: { name: string; branch: string; morning: string; evening: string; morningRate: string; eveningRate: string; img?: string }; locale: string }) {
+interface CardStyles {
+  cardNameStyle?: TextStyle;
+  cardBranchStyle?: TextStyle;
+  cardFeeValueStyle?: TextStyle;
+  cardFeeLabelStyle?: TextStyle;
+  cardRateStyle?: TextStyle;
+  cardRateLabelStyle?: TextStyle;
+}
+
+function Card({ dept, locale, styles }: { dept: { slug: string; name: string; desc?: string; branch: string; morning: string; evening: string; morningRate: string; eveningRate: string; img?: string }; locale: string; styles?: CardStyles }) {
+  const cs = styles || {};
   return (
-    <div className="flex-shrink-0 w-[320px]">
+    <a href={`/${locale}/tuition-fees/${dept.slug}`} className="flex-shrink-0 w-[320px] block">
       <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-neutral-100 h-full flex flex-col">
         {dept.img ? (
           <div className="w-full h-32 relative overflow-hidden">
@@ -515,34 +682,32 @@ function Card({ dept, locale }: { dept: { name: string; branch: string; morning:
           </div>
         )}
         <div className="p-5 flex-1 flex flex-col">
-          <h3 className="font-bold text-neutral-900 mb-2 leading-tight text-base">{dept.name}</h3>
-          <div className="mb-3">
-            <span className="inline-block px-2.5 py-1 bg-primary text-white text-xs font-semibold rounded-full">{dept.branch}</span>
-          </div>
+          <h3 className="font-bold text-neutral-900 mb-2 leading-tight text-base" style={applyStyle(cs.cardNameStyle)}>{dept.name}</h3>
+          <span className="inline-block px-2.5 py-1 bg-primary text-white text-xs font-semibold rounded-full mb-3" style={applyStyle(cs.cardBranchStyle)}>{dept.branch}</span>
           <div className="space-y-1.5 mb-3">
             <div className="flex items-center justify-between p-2.5 bg-blue-50 rounded-lg">
-              <span className="text-xs font-medium text-neutral-700">{locale === "ar" ? "صباحي" : "Morning"}</span>
-              <span className="text-sm font-bold text-primary">{dept.morning} د.ع</span>
+              <span className="text-xs font-medium text-neutral-700" style={applyStyle(cs.cardFeeLabelStyle)}>{locale === "ar" ? "صباحي" : "Morning"}</span>
+              <span className="text-sm font-bold text-primary" style={applyStyle(cs.cardFeeValueStyle)}>{dept.morning} {locale === "ar" ? "د.ع" : "IQD"}</span>
             </div>
             <div className="flex items-center justify-between p-2.5 bg-green-50 rounded-lg">
-              <span className="text-xs font-medium text-neutral-700">{locale === "ar" ? "مسائي" : "Evening"}</span>
-              <span className="text-sm font-bold text-primary">{dept.evening} د.ع</span>
+              <span className="text-xs font-medium text-neutral-700" style={applyStyle(cs.cardFeeLabelStyle)}>{locale === "ar" ? "مسائي" : "Evening"}</span>
+              <span className="text-sm font-bold text-primary" style={applyStyle(cs.cardFeeValueStyle)}>{dept.evening} {locale === "ar" ? "د.ع" : "IQD"}</span>
             </div>
           </div>
           <div className="mt-auto pt-3 border-t border-neutral-200">
-            <p className="text-xs text-neutral-600 mb-1.5">{locale === "ar" ? "الحد الأدنى لمعدل القبول:" : "Minimum acceptance rate:"}</p>
+            <p className="text-xs text-neutral-600 mb-1.5" style={applyStyle(cs.cardRateLabelStyle)}>{locale === "ar" ? "الحد الأدنى لمعدل القبول:" : "Minimum acceptance rate:"}</p>
             <div className="flex items-center justify-between text-xs">
-              <span className="text-neutral-600">{locale === "ar" ? "صباحي" : "Morning"}:</span>
-              <span className="font-bold text-neutral-900">{dept.morningRate}</span>
+              <span className="text-neutral-600" style={applyStyle(cs.cardRateLabelStyle)}>{locale === "ar" ? "صباحي" : "Morning"}:</span>
+              <span className="font-bold text-neutral-900" style={applyStyle(cs.cardRateStyle)}>{dept.morningRate}</span>
             </div>
             <div className="flex items-center justify-between text-xs mt-0.5">
-              <span className="text-neutral-600">{locale === "ar" ? "مسائي" : "Everyning"}:</span>
-              <span className="font-bold text-neutral-900">{dept.eveningRate}</span>
+              <span className="text-neutral-600" style={applyStyle(cs.cardRateLabelStyle)}>{locale === "ar" ? "مسائي" : "Evening"}:</span>
+              <span className="font-bold text-neutral-900" style={applyStyle(cs.cardRateStyle)}>{dept.eveningRate}</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -583,7 +748,7 @@ function FlagCounter({ locale }: { locale: string }) {
   );
 }
 
-function TuitionFees({ data, locale }: { data: { title: string; viewAll: string; departments: { name: string; branch: string; morning: string; evening: string; morningRate: string; eveningRate: string; img?: string }[] }; locale: string }) {
+function TuitionFees({ data, locale }: { data: { title: string; titleStyle?: TextStyle; viewAll: string; viewAllStyle?: TextStyle; cardNameStyle?: TextStyle; cardBranchStyle?: TextStyle; cardFeeValueStyle?: TextStyle; cardFeeLabelStyle?: TextStyle; cardRateStyle?: TextStyle; cardRateLabelStyle?: TextStyle; departments: { slug: string; name: string; desc?: string; branch: string; morning: string; evening: string; morningRate: string; eveningRate: string; img?: string }[] }; locale: string }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
 
@@ -653,19 +818,19 @@ function TuitionFees({ data, locale }: { data: { title: string; viewAll: string;
     <section className="w-full py-16 bg-primary-dark overflow-hidden">
       <style>{`.tf-track{width:fit-content;display:flex;}.tf-track.dragging{cursor:grabbing!important}`}</style>
       <div className="px-4 mb-10 text-center">
-        <h2 className="text-4xl font-bold text-white mb-4">{data.title}</h2>
+        <h2 className="text-4xl font-bold text-white mb-4" style={applyStyle(data.titleStyle)}>{data.title}</h2>
         <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary-light mx-auto rounded-full mb-8" />
-        <a href="#" className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold text-base rounded-full transition-all border border-white/40 hover:border-white/60">
+        <a href={`/${locale}/tuition-fees`} className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold text-base rounded-full transition-all border border-white/40 hover:border-white/60">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
           </svg>
-          <span>{data.viewAll}</span>
+          <span style={applyStyle(data.viewAllStyle)}>{data.viewAll}</span>
         </a>
       </div>
       <div ref={trackRef} className="w-full overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none" style={{ direction: "ltr" }}>
         <div className="tf-track gap-4 md:gap-6 lg:gap-8" onMouseDown={onMouseDown}>
           {[...data.departments, ...data.departments].map((dept, i) => (
-            <Card key={i} dept={dept} locale={locale} />
+            <Card key={i} dept={dept} locale={locale} styles={data} />
           ))}
         </div>
       </div>
@@ -673,66 +838,134 @@ function TuitionFees({ data, locale }: { data: { title: string; viewAll: string;
   );
 }
 
-export function Footer({ footerData, locale }: { footerData: { quicklinks: { title: string; items: string[] }; certificates: { title: string; items: string[] }; contact: { title: string; address: string; phone: string; hours: string }; social_title: string; copyright: string; social?: Record<string, string> }; locale: string }) {
+function FooterContactForm({ locale }: { locale: string }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [err, setErr] = useState('');
+  const ar = locale === 'ar';
+
+  const handleSend = () => {
+    if (!name.trim()) { setErr(ar ? 'الاسم مطلوب' : 'Name is required'); return; }
+    if (!email.trim()) { setErr(ar ? 'البريد الإلكتروني مطلوب' : 'Email is required'); return; }
+    setErr('');
+    setStatus('sending');
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, phone, message }),
+    })
+      .then(r => {
+        if (r.ok) {
+          setStatus('sent');
+          setName(''); setEmail(''); setPhone(''); setMessage('');
+        } else {
+          setStatus('error');
+        }
+      })
+      .catch(() => setStatus('error'))
+      .finally(() => { setTimeout(() => setStatus('idle'), 4000); });
+  };
+
+  const inp: React.CSSProperties = {
+    width: '100%', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
+    borderRadius: 8, padding: '8px 10px', fontSize: 13, color: 'white',
+    outline: 'none', boxSizing: 'border-box',
+  };
+
+  const btnBg = status === 'sent' ? '#16a34a' : status === 'error' ? '#dc2626' : 'rgba(255,255,255,0.18)';
+
   return (
-    <footer className="bg-primary-dark text-white">
-      <div className="max-w-7xl mx-auto px-4 pt-8 pb-6">
-        <div className="grid md:grid-cols-3 gap-4">
-          <div>
-            <h4 className="font-bold text-base mb-2">{footerData.quicklinks.title}</h4>
-            <ul className="space-y-1 text-sm">
-              {footerData.quicklinks.items.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-white/70 hover:text-white transition-colors">{link}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
+    <div style={{ width: 280, flexShrink: 0, marginRight: 24, alignSelf: 'stretch', marginTop: 16, marginBottom: 16, borderRadius: 12, background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', padding: '16px', display: 'flex', flexDirection: 'column', gap: 8, direction: ar ? 'rtl' : 'ltr', overflow: 'hidden', position: 'relative', zIndex: 10 }}>
+      <h4 style={{ fontWeight: 700, fontSize: 14, margin: 0, color: 'rgba(255,255,255,0.9)' }}>
+        {ar ? 'تواصل معنا' : 'Contact Us'}
+      </h4>
+      <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', margin: 0 }}>
+        {ar ? 'أرسل لنا رسالة وسنرد عليك قريباً' : "Send us a message and we'll reply soon"}
+      </p>
+      <input style={inp} placeholder={ar ? 'الاسم *' : 'Name *'} value={name} onChange={e => setName(e.target.value)} />
+      <input style={inp} placeholder={ar ? 'البريد الإلكتروني *' : 'Email *'} value={email} onChange={e => setEmail(e.target.value)} />
+      <input style={inp} placeholder={ar ? 'رقم الهاتف (اختياري)' : 'Phone (optional)'} value={phone} onChange={e => setPhone(e.target.value)} />
+      <textarea style={{ ...inp, resize: 'none', flexGrow: 1, minHeight: 60 }} placeholder={ar ? 'رسالتك...' : 'Your message...'} value={message} onChange={e => setMessage(e.target.value)} />
+      {err && <p style={{ fontSize: 11, color: '#fca5a5', margin: 0 }}>{err}</p>}
+      <button
+        type="button"
+        disabled={status === 'sending'}
+        onClick={handleSend}
+        style={{ background: btnBg, border: '1px solid rgba(255,255,255,0.3)', borderRadius: 8, color: 'white', fontWeight: 600, fontSize: 13, padding: '9px 8px', cursor: status === 'sending' ? 'not-allowed' : 'pointer', flexShrink: 0, marginTop: 'auto' }}>
+        {status === 'sending' ? (ar ? 'جارٍ الإرسال...' : 'Sending...') : status === 'sent' ? (ar ? '✓ تم الإرسال' : '✓ Sent!') : status === 'error' ? (ar ? 'خطأ، أعد المحاولة' : 'Error, retry') : (ar ? 'إرسال الرسالة' : 'Send Message')}
+      </button>
+    </div>
+  );
+}
 
-          <div>
-            <h4 className="font-bold text-base mb-2">{footerData.certificates.title}</h4>
-            <ul className="space-y-1 text-sm">
-              {footerData.certificates.items.map((cert) => (
-                <li key={cert}>
-                  <a href="#" className="text-white/70 hover:text-white transition-colors">{cert}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-base mb-2">{footerData.contact.title}</h4>
-            <address className="not-italic text-white/70 text-sm leading-relaxed">
-              <p>{footerData.contact.address}</p>
-              <p className="mt-2">{footerData.contact.phone}</p>
-              <p className="mt-2">{footerData.contact.hours}</p>
-            </address>
+export function Footer({ footerData, locale }: { footerData: { quicklinks: { title: string; items: string[] }; certificates: { title: string; items: string[] }; contact: { title: string; address: string; phone: string; hours: string }; social_title: string; copyright: string; social?: Record<string, string>; mapUrl?: string; quicklinksStyle?: TextStyle; quicklinksItemsStyle?: TextStyle; certificatesStyle?: TextStyle; certificatesItemsStyle?: TextStyle; contactStyle?: TextStyle; contactTextStyle?: TextStyle; socialTitleStyle?: TextStyle; copyrightStyle?: TextStyle }; locale: string }) {
+  return (
+    <footer className="bg-primary-dark text-white" style={{ display: 'flex', flexDirection: 'row', direction: 'ltr', alignItems: 'stretch' }}>
+      {/* الخريطة — يسار، كامل الارتفاع */}
+      {footerData.mapUrl && (
+        <div style={{ width: 280, flexShrink: 0, marginLeft: 24, alignSelf: 'stretch', marginTop: 16, marginBottom: 16, borderRadius: 12, overflow: 'hidden' }}>
+          <iframe src={footerData.mapUrl} style={{ width: '100%', height: '100%', display: 'block', border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title={locale === 'ar' ? 'موقع الجامعة' : 'University Location'} />
+        </div>
+      )}
+      {/* نموذج التواصل — يمين الخريطة */}
+      <FooterContactForm locale={locale} />
+      {/* المحتوى — يمين */}
+      <div style={{ flex: 1, direction: 'rtl', pointerEvents: 'none' }}>
+        <div className="px-4 pt-8 pb-6" style={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8" style={{ width: 'fit-content', transform: 'translateX(-304px)', fontSize: '0.9rem', pointerEvents: 'auto' }}>
+            <div>
+              <h4 className="font-bold mb-2" style={applyStyle(footerData.quicklinksStyle)}>{footerData.quicklinks.title}</h4>
+              <ul className="space-y-1" style={applyStyle(footerData.quicklinksItemsStyle)}>
+                {footerData.quicklinks.items.map((link: string) => (
+                  <li key={link}><a href="#" className="text-white/70 hover:text-white transition-colors">{link}</a></li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-2" style={applyStyle(footerData.certificatesStyle)}>{footerData.certificates.title}</h4>
+              <ul className="space-y-1" style={applyStyle(footerData.certificatesItemsStyle)}>
+                {footerData.certificates.items.map((cert: string) => (
+                  <li key={cert}><a href="#" className="text-white/70 hover:text-white transition-colors">{cert}</a></li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-2" style={applyStyle(footerData.contactStyle)}>{footerData.contact.title}</h4>
+              <address className="not-italic text-white/70 leading-relaxed" style={applyStyle(footerData.contactTextStyle)}>
+                <p>{footerData.contact.address}</p>
+                <p className="mt-1">{footerData.contact.phone}</p>
+                <p className="mt-1">{footerData.contact.hours}</p>
+              </address>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="border-t border-white/10 py-4">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-4">
-          <p className="text-white/70 text-sm font-medium">{footerData.social_title}</p>
-          <div className="flex items-center justify-center gap-3">
-            <SocialIcon href={footerData.social?.facebook || "#"} name="فيسبوك" bg="hover:bg-[#1877F2]"><FacebookIcon /></SocialIcon>
-            <SocialIcon href={footerData.social?.instagram || "#"} name="إنستغرام" bg="hover:bg-[#E4405F]"><InstagramIcon /></SocialIcon>
-            {footerData.social?.telegram && (
-              <SocialIcon href={footerData.social.telegram} name="تيلغرام" bg="hover:bg-[#0088CC]"><TelegramIcon /></SocialIcon>
-            )}
-            <SocialIcon href={footerData.social?.tiktok || "#"} name="تيك توك" bg="hover:bg-[#000000]"><TiktokIcon /></SocialIcon>
-            <SocialIcon href={footerData.social?.youtube || "#"} name="يوتيوب" bg="hover:bg-[#FF0000]"><YoutubeIcon /></SocialIcon>
-            {footerData.social?.twitter && (
-              <SocialIcon href={footerData.social.twitter} name="تويتر" bg="hover:bg-[#1DA1F2]"><TwitterIcon /></SocialIcon>
-            )}
-            {footerData.social?.linkedin && (
-              <SocialIcon href={footerData.social.linkedin} name="لينكد إن" bg="hover:bg-[#0A66C2]"><LinkedinIcon /></SocialIcon>
-            )}
+        <div className="border-t border-white/10 py-4" style={{ pointerEvents: 'auto' }}>
+          <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-4" style={{ transform: 'translateX(-304px)' }}>
+            <p className="text-white/70 text-sm font-medium" style={applyStyle(footerData.socialTitleStyle)}>{footerData.social_title}</p>
+            <div className="flex items-center justify-center gap-3">
+              <SocialIcon href={footerData.social?.facebook || "#"} name="فيسبوك" bg="hover:bg-[#1877F2]"><FacebookIcon /></SocialIcon>
+              <SocialIcon href={footerData.social?.instagram || "#"} name="إنستغرام" bg="hover:bg-[#E4405F]"><InstagramIcon /></SocialIcon>
+              {footerData.social?.telegram && (
+                <SocialIcon href={footerData.social.telegram} name="تيلغرام" bg="hover:bg-[#0088CC]"><TelegramIcon /></SocialIcon>
+              )}
+              <SocialIcon href={footerData.social?.tiktok || "#"} name="تيك توك" bg="hover:bg-[#000000]"><TiktokIcon /></SocialIcon>
+              <SocialIcon href={footerData.social?.youtube || "#"} name="يوتيوب" bg="hover:bg-[#FF0000]"><YoutubeIcon /></SocialIcon>
+              {footerData.social?.twitter && (
+                <SocialIcon href={footerData.social.twitter} name="تويتر" bg="hover:bg-[#1DA1F2]"><TwitterIcon /></SocialIcon>
+              )}
+              {footerData.social?.linkedin && (
+                <SocialIcon href={footerData.social.linkedin} name="لينكد إن" bg="hover:bg-[#0A66C2]"><LinkedinIcon /></SocialIcon>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <FlagCounter locale={locale} />
-      <div className="border-t border-white/10 py-4 text-center text-sm text-white/50">
-        {footerData.copyright}
+        <div style={{ transform: 'translateX(-304px)', pointerEvents: 'auto' }}><FlagCounter locale={locale} /></div>
+        <div className="border-t border-white/10 py-4 text-center text-sm text-white/50" style={{ transform: 'translateX(-304px)', pointerEvents: 'auto' }}>
+          <span style={applyStyle(footerData.copyrightStyle)}>{footerData.copyright}</span>
+        </div>
       </div>
     </footer>
   );
@@ -741,6 +974,30 @@ export function Footer({ footerData, locale }: { footerData: { quicklinks: { tit
 // ----- Page -----
 export default function PageContent({ locale }: { locale: string }) {
   const t = useTranslations();
+  const [apiEvents, setApiEvents] = useState<NewsItem[]>([]);
+  const [apiDepartments, setApiDepartments] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch('/api/departments')
+      .then(r => r.json())
+      .then(d => { if (d.items?.length > 0) setApiDepartments(d.items); })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/events')
+      .then(r => r.json())
+      .then(d => {
+        if (d.items && d.items.length > 0) {
+          setApiEvents(d.items.map((e: any) => ({
+            date: e.date || new Date(e.createdAt || Date.now()).toLocaleDateString(locale === 'ar' ? 'ar-IQ' : 'en-US'),
+            title: locale === 'ar' ? (e.titleAr || e.title || '') : (e.titleEn || e.title || ''),
+            href: e.href || '#',
+          })));
+        }
+      })
+      .catch(() => {});
+  }, [locale]);
 
   const mapChildren = (children: any[], locale: string): NavChild[] =>
     children?.map((child: any) => {
@@ -756,6 +1013,9 @@ export default function PageContent({ locale }: { locale: string }) {
     children: mapChildren(item.children, locale),
   }));
 
+  const logoSettings = (() => { try { return t.raw("logo") as any; } catch { return {}; } })();
+  const navStyles = (() => { try { return t.raw("navStyles") as Record<string, TextStyle>; } catch { return {}; } })();
+
   const heroSlides: SliderItem[] = t.raw("hero").map((slide: any, i: number) => ({
     title: slide.title,
     desc: slide.desc,
@@ -765,18 +1025,36 @@ export default function PageContent({ locale }: { locale: string }) {
       "/images/slide3.jpg",
       "/images/slide4.webp",
     ][i] || "",
+    titleStyle: slide.titleStyle,
+    descStyle: slide.descStyle,
   }));
 
   const quickLinks: { label: string; href: string }[] = t.raw("quicklinks").map((item: any) =>
     typeof item === "string" ? { label: item, href: "#" } : { label: item.label || "", href: item.href || "#" }
   );
-  const features = t.raw("features").map((f: any) => ({ title: f.title, desc: f.desc, more: f.more, href: f.href || "#" }));
-  const sideCards = t.raw("sidecards").map((c: any) => ({ title: c.title, desc: c.desc, more: c.more, href: c.href || "#" }));
+  const features = t.raw("features").map((f: any) => ({ title: f.title, desc: f.desc, more: f.more, href: f.href || "#", img: f.img, youtube: f.youtube || '', category: f.category || '', date: f.date || '', titleStyle: f.titleStyle, descStyle: f.descStyle }));
+  const sideCards = t.raw("sidecards").map((c: any) => ({ title: c.title, desc: c.desc, more: c.more, href: c.href || "#", img: c.img || '', titleStyle: c.titleStyle, descStyle: c.descStyle }));
   const highlight = t.raw("highlight");
   const news: NewsItem[] = t.raw("news.items").map((item: any) => ({ date: item.date, title: item.title, href: item.href || "#" }));
   const events: NewsItem[] = t.raw("events.items").map((item: any) => ({ date: item.date, title: item.title, href: item.href || "#" }));
   const footerData = t.raw("footer");
-  const tuitionFeesData = t.raw("tuitionFees");
+  const tuitionFeesRaw = t.raw("tuitionFees") as any;
+  const tuitionFeesData = {
+    ...tuitionFeesRaw,
+    departments: apiDepartments.length > 0
+      ? apiDepartments.filter((d: any) => d.status !== 'inactive').map((d: any) => ({
+          slug: d.slug,
+          name: locale === 'ar' ? d.nameAr : d.nameEn,
+          desc: locale === 'ar' ? d.descAr : d.descEn,
+          branch: locale === 'ar' ? d.branchAr : d.branchEn,
+          morning: d.morning,
+          evening: d.evening,
+          morningRate: d.morningRate,
+          eveningRate: d.eveningRate,
+          img: d.img,
+        }))
+      : tuitionFeesRaw.departments,
+  };
   const chatData = t.raw("chat");
 
   const topbar = {
@@ -787,20 +1065,26 @@ export default function PageContent({ locale }: { locale: string }) {
 
   return (
     <>
-      <Header nav={nav} topbar={topbar} searchLabel={t("search")} locale={locale} />
+      <Header nav={nav} navStyles={navStyles} topbar={topbar} searchLabel={t("search")} locale={locale} logoSettings={logoSettings} />
       <HeroSlider slides={heroSlides} />
+      <HeroBanner data={t.raw("heroBanner")} locale={locale} />
       {quickLinks.length > 0 && <QuickLinks items={quickLinks} />}
-      <FeatureCards items={features} />
+      <div className="max-w-[1840px] mx-auto px-4 pt-36 pb-2 flex justify-center">
+        <h2 className="text-2xl font-bold text-text-dark border-b-4 border-primary pb-1 inline-block" style={applyStyle((t.raw("news") as any)?.latestNewsTitleStyle)}>{t("news.title")}</h2>
+      </div>
+      <FeatureCards items={features} locale={locale} />
       <SideCards items={sideCards} />
       <HighlightSection data={highlight} />
       <TuitionFees data={tuitionFeesData} locale={locale} />
       <NewsEvents
         news={news}
-        events={events}
+        events={apiEvents.length > 0 ? apiEvents : events}
         newsTitle={t("news.title")}
         eventsTitle={t("events.title")}
         newsAll={t("news.all")}
         eventsAll={t("events.all")}
+        newsTitleStyle={(t.raw("news") as any)?.titleStyle}
+        eventsTitleStyle={(t.raw("events") as any)?.titleStyle}
       />
       <Footer footerData={footerData} locale={locale} />
       <AiChat chatData={chatData} locale={locale} />

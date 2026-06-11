@@ -5,7 +5,7 @@ import path from "path";
 const COUNTER_PATH = path.join(process.cwd(), "data", "counter.json");
 
 const FIVE_MIN = 5 * 60 * 1000;
-const TODAY = new Date().toISOString().slice(0, 10);
+const getToday = () => new Date().toISOString().slice(0, 10);
 
 interface CounterData {
   totalViews: number;
@@ -19,7 +19,7 @@ async function readCounter(): Promise<CounterData> {
     const raw = await fs.readFile(COUNTER_PATH, "utf-8");
     return JSON.parse(raw);
   } catch {
-    return { totalViews: 0, todayViews: 0, date: TODAY, sessions: [] };
+    return { totalViews: 0, todayViews: 0, date: getToday(), sessions: [] };
   }
 }
 
@@ -49,8 +49,9 @@ async function getStats(request: NextRequest) {
     data.sessions.push({ ip, time: now });
   }
 
-  if (data.date !== TODAY) {
-    data.date = TODAY;
+  const today = getToday();
+  if (data.date !== today) {
+    data.date = today;
     data.todayViews = 1;
     data.totalViews += 1;
   } else {
