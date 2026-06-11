@@ -11,13 +11,15 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   let messages: any;
   try {
-    // Try fs first (works in dev and when files are writable)
     const filePath = path.join(process.cwd(), "messages", `${locale}.json`);
     const raw = await fs.readFile(filePath, "utf-8");
     messages = JSON.parse(raw);
   } catch {
-    // Fallback to static import (works on Netlify/Vercel serverless)
-    messages = (await import(`../messages/${locale}.json`)).default;
+    if (locale === "ar") {
+      messages = (await import("../messages/ar.json")).default;
+    } else {
+      messages = (await import("../messages/en.json")).default;
+    }
   }
 
   return { locale, messages };
